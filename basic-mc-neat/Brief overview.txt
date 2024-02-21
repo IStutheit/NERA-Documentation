@@ -1,0 +1,11 @@
+What each class does:
+
+input_formatter.py: Formats input. Input is video from testinput.mp4 file. input_formatter breaks this video into it's frames and then converts the frames from a higher resolution down to 5x1. This can be changed and is definitely way too much of a size reduction, but I wanted it to run faster. The 5x1 frames are then converted into arrays and added to a list. So, the end result is a list of 6000 5x1 arrays.
+
+output_formatter.py: Formats output from the testoutput.jsonl file. Much of the info provided is discarded for the sake of this simple implementation. The only things I was concerned with were the keys being pressed, mouse x position, and mouse y position. As I tpye this I realize that I forgot to include mouse presses...which might be why the performance is iffy - I will try and add this. Outputs are converted into 15 dimensional tuples - 13 for the 13 observed types of key presses in the video and 2 for the mouse positions. These tuples are then added to a list.
+
+config: File to configure NEAT run. The documentation explains it much better than I can: https://neat-python.readthedocs.io/en/latest/config_file.html
+
+toy-neat.py: Population of networks is initialized according to configuration file. The network is fed a 5x1 state vector and outputs a 15x1 action vector. Networks are scored on their prediction accuracy for all 6000 samples. Most fit networks crossover and reproduce. Runs for 300 generations or until a fitness threshold of 5000 is breached.
+
+Note - run input_formatter.py before running toy_neat.
