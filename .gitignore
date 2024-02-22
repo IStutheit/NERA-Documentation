@@ -1,0 +1,7 @@
+*/__pycache__
+
+#temporary until we can determine a good "output/config" file structure
+*neat-checkpoint-*
+winner_net
+winner_net.svg
+avg_fitness.svg
