@@ -5,7 +5,7 @@
 * I have been running/testing this with:
 * Windows 11
 * Python 3.10.6
-* Temurium Java8 JDK
+* Temurin Java8 JDK
 
 
 1. Install Java8 JDK if not already (https://adoptium.net/temurin/releases/?version=8)
