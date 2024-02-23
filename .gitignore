@@ -1,4 +1,5 @@
 */__pycache__
+*vscode/*
 
 #temporary until we can determine a good "output/config" file structure
 */toy-neat-output/*
