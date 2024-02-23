@@ -1,6 +1,14 @@
 */__pycache__
 *vscode/*
 
+
+#temporary ignore scripts added in minerl until we can determine if they are build specific
+*/minerl/scripts/gradle.properties
+*/minerl/scripts/launchClient.sh
+*/minerl/scripts/launchClient.bat
+*/minerl/scripts/README.md
+*/minerl/scripts/src/main/*
+
 #temporary until we can determine a good "output/config" file structure
 */toy-neat-output/*
 *neat-checkpoint-*
