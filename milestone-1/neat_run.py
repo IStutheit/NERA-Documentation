@@ -48,7 +48,7 @@ def eval_genome(genome, config):
             #else:
             score += 1 - ((.913 * BinaryCrossEntropy(output_data[i][j][0:2] + output_data[i][j][4:], output[0:2] + output[4:]) + .087*mean_squared_error(output_data[i][j][2:4], output[2:4])) / 2)
         net.reset()
-    return score/60000
+    return score/30000
 
 def run(config_file):
     # Load configuration.
