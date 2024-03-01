@@ -19,7 +19,7 @@ while True:
         break
 
     # Resize frame to 64x64 and convert to grayscale
-    frame = cv2.resize(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), (5, 1))
+    frame = cv2.resize(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), (25, 25))
 
     # Normalize pixel values to range [0, 1]
     frame = frame.astype(np.float32) / 255.0
