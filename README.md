@@ -2,7 +2,9 @@
 
 ## Overview
 
+## Release Notes
 
+Milestone 1:
 
 
 ## MineRL Build & Install
