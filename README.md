@@ -4,7 +4,7 @@
 
 ## Release Notes
 
-Milestone 1:
+Milestone 1: Basic implementation and testing of NEAT Algorithm implemented.
 
 
 ## MineRL Build & Install
