@@ -1,7 +1,3 @@
-*/__pycache__
-*vscode/*
-
-
 #temporary ignore scripts added in minerl until we can determine if they are build specific
 */minerl/scripts/gradle.properties
 */minerl/scripts/launchClient.sh
@@ -16,4 +12,19 @@ winner_net
 winner_net.svg
 avg_fitness.svg
 species.svg
-.*mp4
+
+# More "permanent" ignores that we will keep throughout the project
+#------------------------------------------------------------
+
+#ignore all .mp4 files
+*.mp4
+
+#exclude the entire temp temp_training directory (and any variations of it used for testing)
+*/temp_training*
+
+
+#cahce files
+*/__pycache__
+
+#vscode config files. Add for any other IDE you might be using as well
+*vscode/*
