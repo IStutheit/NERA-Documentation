@@ -28,7 +28,7 @@ def parse_urls_from_json(file_path):
     # Return the list of URLs
     #return full_urls
         
-    # Return 5 Urls for testing purposes
+    # Return 5 Urls for testing purposes TODO: switch this back to returning all urls when done testing
     return full_urls[:10]
 #------------------------------------------------------------
 
