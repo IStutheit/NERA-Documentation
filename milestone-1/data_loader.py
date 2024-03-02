@@ -122,7 +122,7 @@ def process_labels(file_path):
 ###### DOWNLOAD FILES ######
 
 # Path to your JSON file
-json_file_path = '../data/all_6xx_Jun_29.json'
+json_file_path = '../data/Contractor_Index_Files/all_6xx_Jun_29.json'
 
 # Directory to save the downloaded files
 download_directory = '../data/temp_training'
