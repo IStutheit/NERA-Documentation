@@ -11,7 +11,7 @@ def process_video(video_path, output_dir=None):
     Optionally saves all processed frames to a single .npy file in the specified output directory. Output file name will be the same as the input video file, with "_proc.npy" appended in place of the original extension.
 
     Each frame is resized to 25x25 pixels, converted to grayscale, flattened into a vector, and normalized so that
-    pixel values are in the range [0, 1]. This preprocessing is useful for various computer vision and machine learning tasks.
+    pixel values are in the range [0, 1].
 
     Args:
         video_path (str): The path to the video file to be processed.
