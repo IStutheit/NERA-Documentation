@@ -7,10 +7,10 @@ import numpy as np
 import multiprocessing
 import pickle
 
-with open("../utils/temp_training/prepped_input_data.json", 'r') as file:
+with open("../data/temp_training/prepped_input_data.json", 'r') as file:
     input_data = json.load(file)
 
-with open("../utils/temp_training/prepped_output_data.json", 'r') as file:
+with open("../data/temp_training/prepped_output_data.json", 'r') as file:
     output_data = json.load(file)
 
     

@@ -122,10 +122,10 @@ def process_labels(file_path):
 ###### DOWNLOAD FILES ######
 
 # Path to your JSON file
-json_file_path = '../utils/all_6xx_Jun_29.json'
+json_file_path = '../data/all_6xx_Jun_29.json'
 
 # Directory to save the downloaded files
-download_directory = '../utils/temp_training'
+download_directory = '../data/temp_training'
 
 # Read the JSON file
 with open(json_file_path, 'r') as file:
@@ -167,7 +167,7 @@ for i in range(5):  # Assuming the links are stored in a list under the key 'lin
 files = os.listdir(download_directory)
 videos_data = []
 
-prepped_input_data = '../utils/temp_training/prepped_input_data.json'
+prepped_input_data = '../data/temp_training/prepped_input_data.json'
 
 for file in files:
     if file.endswith('.mp4'):
@@ -185,7 +185,7 @@ with open(prepped_input_data, 'w') as file:
 files = os.listdir(download_directory)
 labels_data = []
 
-prepped_output_data = '../utils/temp_training/prepped_output_data.json'
+prepped_output_data = '../data/temp_training/prepped_output_data.json'
 
 for file in files:
     if file.endswith('.jsonl'):
