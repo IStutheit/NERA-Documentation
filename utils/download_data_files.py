@@ -8,18 +8,23 @@ from parse_urls_from_json import parse_urls_from_json
 def download_file(session, url, download_dir):
     """
     Helper function to download a single file.
+    If the file already exists in the download directory, it will not be downloaded again.
     """
+
     file_name = url.split('/')[-1]
     file_path = os.path.join(download_dir, file_name)
-    
-    with session.get(url, stream=True) as response:
-        if response.status_code == 200:
-            with open(file_path, 'wb') as file:
-                for chunk in response.iter_content(chunk_size=8192):
-                    file.write(chunk)
-            return f"Downloaded {file_name} to {download_dir}"
-        else:
-            return f"Failed to download {file_name}. Status code: {response.status_code}"
+
+    if os.path.exists(file_path):
+        return f"File {file_name} already exists in {download_dir}. Skipping download."
+    else:
+        with session.get(url, stream=True) as response:
+            if response.status_code == 200:
+                with open(file_path, 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+                return f"Downloaded {file_name} to {download_dir}"
+            else:
+                return f"Failed to download {file_name}. Status code: {response.status_code}"
 #------------------------------------------------------------
 
 
@@ -58,8 +63,9 @@ def download_files(urls, download_dir, num_workers=None):
 # Example usage
 #------------------------------------------------------------
 if __name__ == "__main__":
-    file_path = '../data/all_6xx_Jun_29.json'
-    download_dir = '../data/temp_training3/'
+    file_path = '../data/Contractor_Index_Files/all_6xx_Jun_29.json'
+    #file_path = '../data/Contractor_Index_Files/all_9xx_Jun_29.json'
+    download_dir = '../data/temp_training/'
     urls = parse_urls_from_json(file_path)
     download_files(urls, download_dir)  # Automatically determines the number of workers without specifying the num_workers argument
 #------------------------------------------------------------

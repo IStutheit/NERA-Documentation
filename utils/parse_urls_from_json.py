@@ -1,5 +1,8 @@
 import json
 
+#TODO - There are two additional URLS that are available for each Contractor link. Do we need to be using these? 
+# They contain the game options, and the checkpoint zip file.
+#(-options.json and .zip respectively in place of .mp4)
 
 #------------------------------------------------------------
 def parse_urls_from_json(file_path):
@@ -41,7 +44,8 @@ def parse_urls_from_json(file_path):
 if __name__ == "__main__":
     # Test the function with a sample JSON file
     #only print up to the first 5 url pairs (10 total urls to avoid cluttering the output)
-    file_path = '../data/all_6xx_Jun_29.json' # BE SURE TO UPDATE THIS IF WE MOVE THIS SCRIPT
+    #file_path = '../data/all_6xx_Jun_29.json' # BE SURE TO UPDATE THIS IF WE MOVE THIS SCRIPT
+    file_path = '../data/Contractor_Index_Files/all_9xx_Jun_29.json' # BE SURE TO UPDATE THIS IF WE MOVE THIS SCRIPT
     urls = parse_urls_from_json(file_path)
     print(urls[:10])
 #------------------------------------------------------------
