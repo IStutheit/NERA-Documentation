@@ -1,7 +1,6 @@
 import requests
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from parse_urls_from_json import parse_urls_from_json
 
 
 #------------------------------------------------------------
@@ -39,7 +38,8 @@ def download_files(urls, download_dir, num_workers=None):
     - num_workers: The number of worker threads to use for downloading files.
     """
 
-    print(f"Downloading {len(urls)} files to {download_dir}")
+    # STATUS MESSAGE
+    print(f"\nDownloading {len(urls)} files to {download_dir}")
 
     if not os.path.exists(download_dir):
         os.makedirs(download_dir)
@@ -63,9 +63,10 @@ def download_files(urls, download_dir, num_workers=None):
 # Example usage
 #------------------------------------------------------------
 if __name__ == "__main__":
-    file_path = '../data/Contractor_Index_Files/all_6xx_Jun_29.json'
+    from parse_urls_from_json import parse_urls_from_json
+    file_path = '../../data/Contractor_Index_Files/all_6xx_Jun_29.json'
     #file_path = '../data/Contractor_Index_Files/all_9xx_Jun_29.json'
-    download_dir = '../data/temp_training/'
+    download_dir = '../../data/temp_training/'
     urls = parse_urls_from_json(file_path)
     download_files(urls, download_dir)  # Automatically determines the number of workers without specifying the num_workers argument
 #------------------------------------------------------------
