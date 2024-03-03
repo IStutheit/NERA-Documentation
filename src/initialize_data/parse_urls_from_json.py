@@ -5,11 +5,19 @@ import json
 # They contain the game options, and the checkpoint zip file.
 # (-options.json and .zip respectively in place of .mp4)
 
-# Each dataset has several urls, but the basename of the .mp4 from the index file is a unique identifier.
-# This basename will be the same for all urls in the same dataset, so we can use this to identify unique datasets)
+
 
 #------------------------------------------------------------
 def parse_urls_from_json(file_path):
+    """
+    Extracts the URLs from the given JSON file and returns a list of URLs.
+
+    Each dataset has several urls, but the basename of the .mp4 from the index file is a unique identifier.
+    This basename will be the same for all urls in the same dataset, so we can use this to identify unique datasets)
+
+    Args:
+    - file_path (str): The path to the JSON file containing the URLs.
+    """
 
     #STATUS MESSAGE
     print("\nExtracting URLs...")

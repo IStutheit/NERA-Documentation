@@ -35,15 +35,17 @@ def process_single_video(video_path, output_dir=None):
         return video_path, []
 
     while True:
-        ret, frame = cap.read()
-        if not ret:
+        ret, frame = cap.read() # Read the next frame
+
+        if not ret: # If the frame is not read, we're at the end of the video, so break the loop
             break
 
+        #Convert to grayscale, resize, and normalize the frame
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         resized_frame = cv2.resize(gray_frame, (25, 25)).flatten() / 255.0
         frames.append(resized_frame)
 
-    cap.release()
+    cap.release() # Release the video capture object
 
     if output_dir:
         output_dir = os.path.abspath(output_dir)
@@ -81,6 +83,8 @@ def process_video_frames(video_paths, output_dir=None, num_workers=None):
         num_workers = os.cpu_count() or 4  # Fallback to 4 if os.cpu_count() returns None
 
     processed_videos = {}
+
+    # Process each video file in parallel
     with ProcessPoolExecutor(max_workers=num_workers) as executor:
         futures = {executor.submit(process_single_video, video_path, output_dir): video_path for video_path in video_paths}
         for future in as_completed(futures):

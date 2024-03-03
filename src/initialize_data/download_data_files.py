@@ -8,14 +8,23 @@ def download_file(session, url, download_dir):
     """
     Helper function to download a single file.
     If the file already exists in the download directory, it will not be downloaded again.
+
+    Args:
+    - session (requests.Session): The session to use for downloading the file.
+    - url (str): The URL of the file to download.
+    - download_dir (str): The directory to download the file to.
     """
 
+    # Get the file name from the URL
     file_name = url.split('/')[-1]
     file_path = os.path.join(download_dir, file_name)
 
+
+    # Skip download if the file already exists
     if os.path.exists(file_path):
         return f"File {file_name} already exists in {download_dir}. Skipping download."
     else:
+        # Attempt to download the file to the specified directory using the given session
         with session.get(url, stream=True) as response:
             if response.status_code == 200:
                 with open(file_path, 'wb') as file:
@@ -33,9 +42,9 @@ def download_files(urls, download_dir, num_workers=None):
     Downloads each file from the given list of URLs to the specified directory using multiple workers.
 
     Args:
-    - urls: List of URLs to download.
-    - download_dir: The directory to download the files to.
-    - num_workers: The number of worker threads to use for downloading files.
+    - urls (list of str): The URLs of the files to download.
+    - download_dir (str): The directory to download the files to.
+    - num_workers (int, optional): The number of worker threads to use for downloading files. If None, the number
     """
 
     # STATUS MESSAGE
@@ -47,6 +56,7 @@ def download_files(urls, download_dir, num_workers=None):
     if num_workers is None:
         num_workers = os.cpu_count() or 4  # Fallback to 4 if os.cpu_count() returns None
 
+    # Use a session to persist the connection for all requests
     with requests.Session() as session:
         with ThreadPoolExecutor(max_workers=num_workers) as executor:
             # Create a future for each URL
