@@ -339,231 +339,394 @@ def list_inventory_changes_with_frames(inventory_changes):
     
 
 
+#This actually kinda works alright
+# import json
+
+# def load_json_lines_file(file_path):
+#     """Load and return the content of a .jsonl file as a list of JSON objects."""
+#     data = []
+#     with open(file_path, 'r') as file:
+#         for line in file:
+#             data.append(json.loads(line))
+#     return data
+
+# def process_inventory_changes(actions):
+#     """Process inventory changes between frames to identify added, removed, or changed items."""
+#     inventory_changes = []
+#     previous_inventory = {}
+
+#     for action in actions:
+#         current_inventory = {item['type']: item['quantity'] for item in action['inventory']}
+#         added = {k: v for k, v in current_inventory.items() if k not in previous_inventory}
+#         removed = {k: previous_inventory[k] for k in previous_inventory if k not in current_inventory}
+#         changed = {k: (current_inventory[k] - previous_inventory[k]) for k in current_inventory if k in previous_inventory and previous_inventory[k] != current_inventory[k]}
+        
+#         inventory_changes.append({
+#             "added": added,
+#             "removed": removed,
+#             "changed": changed
+#         })
+        
+#         previous_inventory = current_inventory
+
+#     return inventory_changes
+
+# def list_inventory_changes_with_frames(inventory_changes):
+#     """List all inventory changes along with the frames they occur."""
+#     changes_list = []
+
+#     for index, change in enumerate(inventory_changes):
+#         if change['added'] or change['removed'] or change['changed']:
+#             changes_list.append({
+#                 "frame": index,
+#                 "added": change['added'],
+#                 "removed": change['removed'],
+#                 "changed": change['changed']
+#             })
+    
+#     return changes_list
+
+# def process_player_and_mouse_movements(actions):
+#     """Process player and mouse movements to identify significant changes."""
+#     movement_changes = []
+#     previous_position = None
+#     previous_mouse_movement = None
+
+#     for action in actions:
+#         current_position = (action['xpos'], action['ypos'], action['zpos'])
+#         current_mouse_movement = (action['mouse']['dx'], action['mouse']['dy'])
+
+#         position_changed = previous_position is not None and current_position != previous_position
+#         mouse_movement_changed = previous_mouse_movement is not None and current_mouse_movement != (0.0, 0.0)
+
+#         movement_changes.append({
+#             "position_changed": position_changed,
+#             "mouse_movement_changed": mouse_movement_changed,
+#             "current_position": current_position if position_changed else None,
+#             "current_mouse_movement": current_mouse_movement if mouse_movement_changed else None
+#         })
+#         previous_position = current_position
+#         previous_mouse_movement = current_mouse_movement
+
+#     return movement_changes
+
+# def calculate_total_displacement(movement_changes):
+#     """Calculate the total displacement for player and mouse movements."""
+#     total_displacement = {
+#         "x_player_displacement": 0,
+#         "y_player_displacement": 0,
+#         "z_player_displacement": 0,
+#         "x_mouse_displacement": 0,
+#         "y_mouse_displacement": 0
+#     }
+    
+#     previous_position = None
+#     for change in movement_changes:
+#         if change['position_changed'] and previous_position is not None:
+#             total_displacement["x_player_displacement"] += abs(change['current_position'][0] - previous_position[0])
+#             total_displacement["y_player_displacement"] += abs(change['current_position'][1] - previous_position[1])
+#             total_displacement["z_player_displacement"] += abs(change['current_position'][2] - previous_position[2])
+#         if change['mouse_movement_changed']:
+#             total_displacement["x_mouse_displacement"] += abs(change['current_mouse_movement'][0])
+#             total_displacement["y_mouse_displacement"] += abs(change['current_mouse_movement'][1])
+#         previous_position = change['current_position'] if change['position_changed'] else previous_position
+
+#     return total_displacement
+
+# def calculate_bounding_box(movement_changes):
+#     """Calculate the bounding box of the region visited."""
+#     min_x = min_y = min_z = float('inf')
+#     max_x = max_y = max_z = float('-inf')
+
+#     for change in movement_changes:
+#         if change['position_changed']:
+#             x, y, z = change['current_position']
+#             min_x, max_x = min(min_x, x), max(max_x, x)
+#             min_y, max_y = min(min_y, y), max(max_y, y)
+#             min_z, max_z = min(min_z, z), max(max_z, z)
+
+#     # Handle case where no movement occurred
+#     if min_x == float('inf'):
+#         min_x = min_y = min_z = max_x = max_y = max_z = 0
+
+#     return {
+#         "min_x": min_x,
+#         "max_x": max_x,
+#         "min_y": min_y,
+#         "max_y": max_y,
+#         "min_z": min_z,
+#         "max_z": max_z
+#     }
+
+
+# def process_button_presses_and_gameEvents(actions):
+#     """Process button presses and game events."""
+#     button_presses = []
+#     gameEvents = []
+
+#     for index, action in enumerate(actions):
+#         if 'newButtons' in action['mouse'] or 'newKeys' in action['keyboard']:
+#             button_presses.append({
+#                 "frame": index,
+#                 "mouse_buttons": action['mouse'].get('newButtons', []),
+#                 "keyboard_keys": action['keyboard'].get('newKeys', [])
+#             })
+
+#         if action.get('stats', {}):
+#             gameEvents.append({"frame": index, "achievements": action['stats']})
+
+#     return button_presses, gameEvents
+
+# def process_game_events(actions):
+#     """Process game events to accurately capture achievements for each frame."""
+#     gameEvents = []
+
+#     for index, action in enumerate(actions):
+#         # Initialize an empty dictionary for each frame to ensure events don't carry over
+#         frame_events = {}
+
+#         # Only add events that are explicitly mentioned in the current frame
+#         if 'stats' in action:
+#             frame_events = action['stats']
+
+#         gameEvents.append({"frame": index, "achievements": frame_events})
+
+#     return gameEvents
+
+# def process_stats_changes_only(actions):
+#     """Process stats to record changes only when they occur."""
+#     processed_stats = []
+#     previous_stats = None
+
+#     for index, action in enumerate(actions):
+#         current_stats = action.get('stats', {})
+#         # Initialize previous_stats in the first iteration
+#         if previous_stats is None:
+#             previous_stats = current_stats
+        
+#         # Compare current_stats with previous_stats to identify changes
+#         stats_changes = {key: value for key, value in current_stats.items() if previous_stats.get(key) != value}
+        
+#         if stats_changes or index == 0:  # Always include the first frame for context
+#             processed_stats.append({"frame": index, "stats_changes": stats_changes})
+        
+#         previous_stats = current_stats  # Update previous_stats for the next iteration
+
+#     return processed_stats
+
+# def main(file_path):
+#     actions = load_json_lines_file(file_path)
+    
+#     # Process inventory and movement changes
+#     inventory_changes = process_inventory_changes(actions)
+#     movement_changes = process_player_and_mouse_movements(actions)
+#     button_presses, gameEvents = process_button_presses_and_gameEvents(actions)
+    
+
+#     # Calculate total displacement
+#     total_displacement = calculate_total_displacement(movement_changes)
+#     bounding_box = calculate_bounding_box(movement_changes)
+
+#     # Applying the revised function to process stats changes only
+#     processed_stats_changes = process_stats_changes_only(actions)
+
+#     #filter out all stats changes that contain minecraft.custom:minecraft.time_since_rest, minecraft.custom:minecraft.play_one_minute, and minecraft.custom:minecraft.time_since_death. But keep all other events.
+#     #these occur every frame though, so we can't just filter the frames that contain them. We need to filter the events themselves.
+#     filtered_stats_changes = processed_stats_changes.copy()
+#     for change in filtered_stats_changes:
+#         for key in change['stats_changes'].copy():
+#             if key == 'minecraft.custom:minecraft.time_since_rest' or key == 'minecraft.custom:minecraft.play_one_minute' or key == 'minecraft.custom:minecraft.time_since_death':
+#                 change['stats_changes'].pop(key)
+    
+#     #print("Filtered Stats Changes (first instances):", json.dumps(filtered_stats_changes[:5], indent=4))
+#     #print("Filtered Stats Changes (first instances):", json.dumps(filtered_stats_changes, indent=4))
+                
+#     #only print the filtered_stats_changes that contain events
+#     filtered_stats_changes_with_events = []
+#     for change in filtered_stats_changes:
+#         if change['stats_changes']:
+#             filtered_stats_changes_with_events.append(change)
+#     print("Filtered Stats Changes with Events (first instances):", json.dumps(filtered_stats_changes_with_events[:5], indent=4))
+
+
+
+#     # Output results
+#     print("Total Displacement:", json.dumps(total_displacement, indent=4))
+#     print("Bounding Box:", json.dumps(bounding_box, indent=4))
+
+# if __name__ == "__main__":
+#     #file_path = 'path_to_your_file.jsonl'  # Update this to the path of your JSON Lines file
+#     file_path = r'/Users/samblooms/Dev/school/Capstone/CSCI4970-MC-GamePlayingBot/data/temp_training/Player129-f153ac423f61-20210617-171344.jsonl'
+#     main(file_path)
+
+
+
+#simplified version of the above
 import json
 
-def load_json_lines_file(file_path):
-    """Load and return the content of a .jsonl file as a list of JSON objects."""
-    data = []
+def process_player_data(file_path):
+    total_ticks = 0
+    total_duration = 0.0
+    frame_count = 0
+
+    keypress_occurs_in_frame = []
+    mouse_click_occurs_in_frame = []
+
+    mouse_moved_frames = []
+    player_orientation_changed_frames = []
+
+    mouse_moved_orientation_changed_frames = []
+    mouse_moved_no_orientation_changed_frames = []
+
+    gui_open_count = 0
+    gui_open_index = []
+
+    gui_mouse_moved_no_orientation_changed_frames = []
+    gui_mouse_move_and_orientation_changed_frames = []
+
+    prevYaw = -190.0   # use values that aren't possible to ensure the first frame is counted
+    prevPitch = -190.0 # use values that aren't possible to ensure the first frame is counted
+
+    prevInventory = {}
+    prevStats = {}
+
+    # Data structures to hold specific event data
+    inventory_events = []
+    stats_events = []
+
+
+    
     with open(file_path, 'r') as file:
         for line in file:
-            data.append(json.loads(line))
-    return data
+            
+            frame_count += 1
+            data = json.loads(line)
+            total_ticks += 1
+            total_duration += data['serverTickDurationMs']
 
-def process_inventory_changes(actions):
-    """Process inventory changes between frames to identify added, removed, or changed items."""
-    inventory_changes = []
-    previous_inventory = {}
 
-    for action in actions:
-        current_inventory = {item['type']: item['quantity'] for item in action['inventory']}
-        added = {k: v for k, v in current_inventory.items() if k not in previous_inventory}
-        removed = {k: previous_inventory[k] for k in previous_inventory if k not in current_inventory}
-        changed = {k: (current_inventory[k] - previous_inventory[k]) for k in current_inventory if k in previous_inventory and previous_inventory[k] != current_inventory[k]}
-        
-        inventory_changes.append({
-            "added": added,
-            "removed": removed,
-            "changed": changed
-        })
-        
-        previous_inventory = current_inventory
+            if data['keyboard']['newKeys']:
+                keypress_occurs_in_frame.append(frame_count)
 
-    return inventory_changes
+            if data['mouse']['newButtons']:
+                mouse_click_occurs_in_frame.append(frame_count)
 
-def list_inventory_changes_with_frames(inventory_changes):
-    """List all inventory changes along with the frames they occur."""
-    changes_list = []
 
-    for index, change in enumerate(inventory_changes):
-        if change['added'] or change['removed'] or change['changed']:
-            changes_list.append({
-                "frame": index,
-                "added": change['added'],
-                "removed": change['removed'],
-                "changed": change['changed']
-            })
+
+            mouse_moved = False
+            if (data['mouse']['dx'] != 0.0) or (data['mouse']['dy'] != 0.0):
+                mouse_moved = True
+                mouse_moved_frames.append(frame_count)
+
+            player_orientation_changed = False
+            if (data['yaw'] != prevYaw) or (data['pitch'] != prevPitch):
+                player_orientation_changed = True
+                player_orientation_changed_frames.append(frame_count)
+            prevYaw = data['yaw']
+            prevPitch = data['pitch']
+            
+            if mouse_moved and player_orientation_changed:
+                mouse_moved_orientation_changed_frames.append(frame_count)
+            elif mouse_moved and not player_orientation_changed:
+                mouse_moved_no_orientation_changed_frames.append(frame_count)
+
+            if data['isGuiOpen']:
+                gui_open_count += 1
+                gui_open_index.append(frame_count)
+                if mouse_moved and not player_orientation_changed:
+                    gui_mouse_moved_no_orientation_changed_frames.append(frame_count)
+                elif mouse_moved and player_orientation_changed:
+                    gui_mouse_move_and_orientation_changed_frames.append(frame_count)
+
+                    #print(f"Frame {frame_count} has GUI open and mouse moved but no orientation change")
+                #if mouse_moved:
+                    #print(f"Frame {frame_count} has GUI open and mouse moved")
+
+
+            currentInventory = {item['type']: item['quantity'] for item in data['inventory']}
+            if frame_count > 1:  # Avoid comparing the first frame
+                added, removed, changed = [], [], []
+                # Check for added items or quantity changes
+                for item, quantity in currentInventory.items():
+                    if item not in prevInventory:
+                        added.append({"item": item, "quantity": quantity})
+                    elif quantity != prevInventory[item]:
+                        changed.append({"item": item, "prev_quantity": prevInventory[item], "new_quantity": quantity})
+                # Check for removed items
+                for item, quantity in prevInventory.items():
+                    if item not in currentInventory:
+                        removed.append({"item": item, "quantity": quantity})
+
+                if added or removed or changed:
+                    inventory_events.append({"frame": frame_count, "added": added, "removed": removed, "changed": changed})
+            prevInventory = currentInventory
+
+            # Stats change detection
+            #currentStats = data['stats']
+            #if currentStats != prevStats and frame_count > 1:  # Avoid comparing the first frame
+            #    diff_stats = {stat: currentStats[stat] for stat in currentStats if stat not in prevStats or #currentStats[stat] != prevStats[stat]}
+            #    if diff_stats:
+            #        stats_events.append({"frame": frame_count, "changes": diff_stats})
+            #prevStats = currentStats
+
+            #stats change detection, but excluding certain stats
+            excluded_stats = [
+                'minecraft.custom:minecraft.time_since_rest',
+                'minecraft.custom:minecraft.play_one_minute',
+                'minecraft.custom:minecraft.time_since_death',
+                'minecraft.custom:minecraft.walk_one_cm',
+                'minecraft.custom:minecraft.sprint_one_cm',
+                'minecraft.custom:minecraft.fly_one_cm'
+            ]
+
+            currentStats = data['stats']
+            if frame_count > 1:
+                #filter excluded stats
+                diff_stats = {stat: currentStats[stat] for stat in currentStats if stat not in prevStats or currentStats[stat] != prevStats[stat] and stat not in excluded_stats}
+                if diff_stats:
+                    stats_events.append({"frame": frame_count, "changes": diff_stats})
+            prevStats = currentStats
+
+
+
+
+
+
+                
+            
     
-    return changes_list
-
-def process_player_and_mouse_movements(actions):
-    """Process player and mouse movements to identify significant changes."""
-    movement_changes = []
-    previous_position = None
-    previous_mouse_movement = None
-
-    for action in actions:
-        current_position = (action['xpos'], action['ypos'], action['zpos'])
-        current_mouse_movement = (action['mouse']['dx'], action['mouse']['dy'])
-
-        position_changed = previous_position is not None and current_position != previous_position
-        mouse_movement_changed = previous_mouse_movement is not None and current_mouse_movement != (0.0, 0.0)
-
-        movement_changes.append({
-            "position_changed": position_changed,
-            "mouse_movement_changed": mouse_movement_changed,
-            "current_position": current_position if position_changed else None,
-            "current_mouse_movement": current_mouse_movement if mouse_movement_changed else None
-        })
-        previous_position = current_position
-        previous_mouse_movement = current_mouse_movement
-
-    return movement_changes
-
-def calculate_total_displacement(movement_changes):
-    """Calculate the total displacement for player and mouse movements."""
-    total_displacement = {
-        "x_player_displacement": 0,
-        "y_player_displacement": 0,
-        "z_player_displacement": 0,
-        "x_mouse_displacement": 0,
-        "y_mouse_displacement": 0
-    }
+    average_duration = total_duration / total_ticks if total_ticks > 0 else 0
     
-    previous_position = None
-    for change in movement_changes:
-        if change['position_changed'] and previous_position is not None:
-            total_displacement["x_player_displacement"] += abs(change['current_position'][0] - previous_position[0])
-            total_displacement["y_player_displacement"] += abs(change['current_position'][1] - previous_position[1])
-            total_displacement["z_player_displacement"] += abs(change['current_position'][2] - previous_position[2])
-        if change['mouse_movement_changed']:
-            total_displacement["x_mouse_displacement"] += abs(change['current_mouse_movement'][0])
-            total_displacement["y_mouse_displacement"] += abs(change['current_mouse_movement'][1])
-        previous_position = change['current_position'] if change['position_changed'] else previous_position
-
-    return total_displacement
-
-def calculate_bounding_box(movement_changes):
-    """Calculate the bounding box of the region visited."""
-    min_x = min_y = min_z = float('inf')
-    max_x = max_y = max_z = float('-inf')
-
-    for change in movement_changes:
-        if change['position_changed']:
-            x, y, z = change['current_position']
-            min_x, max_x = min(min_x, x), max(max_x, x)
-            min_y, max_y = min(min_y, y), max(max_y, y)
-            min_z, max_z = min(min_z, z), max(max_z, z)
-
-    # Handle case where no movement occurred
-    if min_x == float('inf'):
-        min_x = min_y = min_z = max_x = max_y = max_z = 0
-
     return {
-        "min_x": min_x,
-        "max_x": max_x,
-        "min_y": min_y,
-        "max_y": max_y,
-        "min_z": min_z,
-        "max_z": max_z
+        "total_frames": frame_count,
+        "total_ticks": total_ticks,
+        "average_server_tick_duration_ms": average_duration,
+
+
+        "keypress_occurs_in_frame": len(keypress_occurs_in_frame),
+        "mouse_click_occurs_in_frame": len(mouse_click_occurs_in_frame),
+
+        "mouse_moved_frames": len(mouse_moved_frames),
+        "player_orientation_changed_frames": len(player_orientation_changed_frames),
+
+        "mouse_moved_orientation_changed_frames": len(mouse_moved_orientation_changed_frames),
+        "mouse_moved_no_orientation_changed_frames": len(mouse_moved_no_orientation_changed_frames),
+
+        "gui_open_count": gui_open_count,
+
+        "gui_mouse_moved_no_orientation_changed_frames": len(gui_mouse_moved_no_orientation_changed_frames),
+        "gui_mouse_move_and_orientation_changed_frames": len(gui_mouse_move_and_orientation_changed_frames),
+        #"gui_open_index": gui_open_index
+
+        "inventory_events": inventory_events,  
+        #"stats_events": stats_events 
     }
-
-
-def process_button_presses_and_gameEvents(actions):
-    """Process button presses and game events."""
-    button_presses = []
-    gameEvents = []
-
-    for index, action in enumerate(actions):
-        if 'newButtons' in action['mouse'] or 'newKeys' in action['keyboard']:
-            button_presses.append({
-                "frame": index,
-                "mouse_buttons": action['mouse'].get('newButtons', []),
-                "keyboard_keys": action['keyboard'].get('newKeys', [])
-            })
-
-        if action.get('stats', {}):
-            gameEvents.append({"frame": index, "achievements": action['stats']})
-
-    return button_presses, gameEvents
-
-def process_game_events(actions):
-    """Process game events to accurately capture achievements for each frame."""
-    gameEvents = []
-
-    for index, action in enumerate(actions):
-        # Initialize an empty dictionary for each frame to ensure events don't carry over
-        frame_events = {}
-
-        # Only add events that are explicitly mentioned in the current frame
-        if 'stats' in action:
-            frame_events = action['stats']
-
-        gameEvents.append({"frame": index, "achievements": frame_events})
-
-    return gameEvents
-
-def process_stats_changes_only(actions):
-    """Process stats to record changes only when they occur."""
-    processed_stats = []
-    previous_stats = None
-
-    for index, action in enumerate(actions):
-        current_stats = action.get('stats', {})
-        # Initialize previous_stats in the first iteration
-        if previous_stats is None:
-            previous_stats = current_stats
-        
-        # Compare current_stats with previous_stats to identify changes
-        stats_changes = {key: value for key, value in current_stats.items() if previous_stats.get(key) != value}
-        
-        if stats_changes or index == 0:  # Always include the first frame for context
-            processed_stats.append({"frame": index, "stats_changes": stats_changes})
-        
-        previous_stats = current_stats  # Update previous_stats for the next iteration
-
-    return processed_stats
 
 def main(file_path):
-    actions = load_json_lines_file(file_path)
-    
-    # Process inventory and movement changes
-    inventory_changes = process_inventory_changes(actions)
-    movement_changes = process_player_and_mouse_movements(actions)
-    button_presses, gameEvents = process_button_presses_and_gameEvents(actions)
-    
-
-    # Calculate total displacement
-    total_displacement = calculate_total_displacement(movement_changes)
-    bounding_box = calculate_bounding_box(movement_changes)
-
-    #print("Sample gameEvents:", json.dumps(gameEvents[:5], indent=4))  # Displaying first 5 for brevity
-    #print("Sample button presses:", json.dumps(button_presses[:5], indent=4))  # Displaying first 5 for brevity
-
-    #print("Sample gameEvents:", json.dumps(gameEvents, indent=4))  # Displaying first 5 for brevity
-    #print("Sample button presses:", json.dumps(button_presses, indent=4))  # Displaying first 5 for brevity
-
-    # Applying the revised function to process stats changes only
-    processed_stats_changes = process_stats_changes_only(actions)
-
-    # Printing processed stats changes to verify the script is functioning as intended
-    #print("Processed Stats Changes (first instances):", json.dumps(processed_stats_changes[:5], indent=4))
-    #print("Processed Stats Changes (first instances):", json.dumps(processed_stats_changes, indent=4)) #this is broken. It prints time_since_rest and time_since_death and play_one_minute every single frame.
-
-    #filter out all stats changes that contain minecraft.custom:minecraft.time_since_rest, minecraft.custom:minecraft.play_one_minute, and minecraft.custom:minecraft.time_since_death. But keep all other events.
-    #these occur every frame though, so we can't just filter the frames that contain them. We need to filter the events themselves.
-    filtered_stats_changes = processed_stats_changes.copy()
-    for change in filtered_stats_changes:
-        for key in change['stats_changes'].copy():
-            if key == 'minecraft.custom:minecraft.time_since_rest' or key == 'minecraft.custom:minecraft.play_one_minute' or key == 'minecraft.custom:minecraft.time_since_death':
-                change['stats_changes'].pop(key)
-    
-    #print("Filtered Stats Changes (first instances):", json.dumps(filtered_stats_changes[:5], indent=4))
-    #print("Filtered Stats Changes (first instances):", json.dumps(filtered_stats_changes, indent=4))
-                
-    #only print the filtered_stats_changes that contain events
-    filtered_stats_changes_with_events = []
-    for change in filtered_stats_changes:
-        if change['stats_changes']:
-            filtered_stats_changes_with_events.append(change)
-    print("Filtered Stats Changes with Events (first instances):", json.dumps(filtered_stats_changes_with_events[:5], indent=4))
-    
+    player_data = process_player_data(file_path)
+    print("Player Data:", json.dumps(player_data, indent=4))
 
 
-
-
-    # Output results
-    print("Total Displacement:", json.dumps(total_displacement, indent=4))
-    print("Bounding Box:", json.dumps(bounding_box, indent=4))
 
 if __name__ == "__main__":
     #file_path = 'path_to_your_file.jsonl'  # Update this to the path of your JSON Lines file
