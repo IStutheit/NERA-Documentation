@@ -1,5 +1,7 @@
 import os
-from data_initialization import download_files, parse_urls_from_json, process_video_frames, clear_training_data
+from data_initialization.parse_urls_from_json import parse_urls_from_json
+from data_initialization.download_data_files import download_files
+from data_initialization.process_video_frames import process_video_frames
 
 def testModules():
 
