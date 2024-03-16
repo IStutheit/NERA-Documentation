@@ -1,3 +1,4 @@
+#-------------------------------------------------------------
 #temporary ignore scripts added in minerl until we can determine if they are build specific
 */minerl/scripts/gradle.properties
 */minerl/scripts/launchClient.sh
@@ -16,15 +17,20 @@ species.svg
 # More "permanent" ignores that we will keep throughout the project
 #------------------------------------------------------------
 
-#ignore all .mp4 files
-*.mp4
+
 
 #exclude the entire temp temp_training directory (and any variations of it used for testing)
 */temp_training*
 
+# MP4
+# These should be covered by the temp_training directory, but we will leave it for now just in case they end up elsewhere as that could be huge.
+*.mp4
 
-#cahce files
-*/__pycache__
+# pycache 
+# in case they are not already being ignored in local gitignore
+__pycache__/
 
-#vscode config files. Add for any other IDE you might be using as well
-*vscode/*
+#vscode
+*.vscode/*
+
+# Add ignore entries for any other config files, IDE settings, or credentials that might be created on your local machine
