@@ -1,12 +1,13 @@
-import config
-import os
-import pytest
-import sys
-
 # Add the parent directory to the sys.path so that we can import modules from the nera package
 # This will get cleaned up later, but package structure is still in flux atm.
 # TODO - clean up sys.path manipulation in tests
+import os
+import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
+import config
+import pytest
+
 from nera.data_initialization.parse_urls_from_json import parse_urls_from_json
 
 class TestParseUrlsFromJson:
