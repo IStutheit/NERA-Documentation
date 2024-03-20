@@ -1,12 +1,7 @@
-# Add the parent directory to the sys.path so that we can import modules from the nera package
-# This will get cleaned up later, but package structure is still in flux atm.
-# TODO - clean up sys.path manipulation in tests
 import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+import pytest
 
 import config
-import pytest
 
 from nera.data_initialization.parse_urls_from_json import parse_urls_from_json
 from nera.data_initialization.download_data_files import download_files
@@ -30,7 +25,7 @@ class TestDownloadDataFiles:
         download_files(urls, download_dir) 
 
         downloaded_files = os.listdir(download_dir) # Get a list of all files in the download directory
-        url_basenames = [os.path.basename(url) for url in urls]  # Get the basenames of the URLs (i.e the last part of the URL, like https://www.example.com/file.mp4 -> file.mp4)
+        url_filenames = [os.path.basename(url) for url in urls]  # Get the filenames of the URLs (i.e the last part of the URL, like https://www.example.com/file.mp4 -> file.mp4)
 
-        # Assert that there is a file in the download directory whose basename matches each URL basename
-        assert all(url_basename in downloaded_files for url_basename in url_basenames), "There should be a file in the download directory for each URL basename"
+        # Assert that there is a file in the download directory whose basename matches each URL 
+        assert all(url_filename in downloaded_files for url_filename in url_filenames), "There should be a file in the download directory for each file in the URLS list"
