@@ -12,7 +12,6 @@ class TestDownloadDataFiles:
 
     @pytest.fixture
     def setup_data(self):
-        
         # Setup data directory and file paths
         contractor_json_file = config.CONTRACTOR_JSON_FILES_DIR / 'all_6xx_Jun_29.json'
         download_dir = config.TEMP_TRAINING_DIR
@@ -20,7 +19,6 @@ class TestDownloadDataFiles:
     
 
     def test_download_files(self, setup_data):
-
         contractor_json_file, download_dir = setup_data
         urls = parse_urls_from_json(contractor_json_file)
         download_files(urls, download_dir) 

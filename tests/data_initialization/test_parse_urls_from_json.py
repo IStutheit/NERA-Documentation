@@ -9,7 +9,6 @@ class TestParseUrlsFromJson:
 
     @pytest.fixture
     def setup_data(self):
-
         # Setup data directory and file paths
         contractor_json_file = config.CONTRACTOR_JSON_FILES_DIR / 'all_6xx_Jun_29.json'
         return contractor_json_file
@@ -28,4 +27,3 @@ class TestParseUrlsFromJson:
     def test_parse_urls_list_contains_strings(self, setup_data):
         urls = parse_urls_from_json(setup_data)
         assert all(isinstance(url, str) for url in urls), "All elements in the list should be strings"
-            
