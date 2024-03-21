@@ -6,6 +6,17 @@
 
 Milestone 1: Basic implementation and testing of NEAT Algorithm implemented.
 
+## Build and Install
+
+Open a terminal to the cloned directory.
+
+Run `pip install -e .`
+
+This will install the package in "editable mode"
+
+To install with dev-dependencies: 
+
+Run `pip install -e '.[dev]`'
 
 ## MineRL Build & Install
 
