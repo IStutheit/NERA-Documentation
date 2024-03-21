@@ -49,8 +49,13 @@ def process_labels(file_path):
             data = json.loads(json_str)
             key_presses = data.get('keyboard', None).get('keys', None)
             mouse_presses = data.get('mouse', None).get('buttons',None)
-            mouse_movex = data.get('mouse', None).get('dx',None)
-            mouse_movey = data.get('mouse', None).get('dy',None)
+            if json_objects.index(json_str) != 0:
+                data_prev = json.loads(json_objects[json_objects.index(json_str) - 1])
+                yaw_change = data.get('yaw', None) - data_prev.get('yaw', None)
+                pitch_change = data.get('pitch', None) - data_prev.get('pitch', None)
+            else:
+                yaw_change = 0
+                pitch_change = 0
 
             if 0 in mouse_presses:
                 label[0] = 1
@@ -58,8 +63,8 @@ def process_labels(file_path):
             if "key.keyboard.s" in key_presses:
                 label[1] = 1
                 
-            label[2] = mouse_movex
-            label[3] = mouse_movey
+            label[2] = yaw_change
+            label[3] = pitch_change
 
             if "key.keyboard.q" in key_presses:
                 label[4] = 1
@@ -122,10 +127,10 @@ def process_labels(file_path):
 ###### DOWNLOAD FILES ######
 
 # Path to your JSON file
-json_file_path = '../data/Contractor_Index_Files/all_6xx_Jun_29.json'
+json_file_path = '../../data/Contractor_Index_Files/6xx_tree_chop.json'
 
 # Directory to save the downloaded files
-download_directory = '../data/temp_training'
+download_directory = '../../data/temp_training'
 
 # Read the JSON file
 with open(json_file_path, 'r') as file:
@@ -134,7 +139,7 @@ with open(json_file_path, 'r') as file:
 basedir = data['basedir']
 
 # Iterate through the links and download the files
-for i in range(5):  # Assuming the links are stored in a list under the key 'links'
+for i in range(100):  # Assuming the links are stored in a list under the key 'links'
     # Get the file name from the link
     file_name = data['relpaths'][i].split('/')[-1]
     file_name_jsonl = data['relpaths'][i].split('/')[-1][:-3] + "jsonl"
@@ -167,7 +172,7 @@ for i in range(5):  # Assuming the links are stored in a list under the key 'lin
 files = os.listdir(download_directory)
 videos_data = []
 
-prepped_input_data = '../data/temp_training/prepped_input_data.json'
+prepped_input_data = '../../data/temp_training/prepped_input_data.json'
 
 for file in files:
     if file.endswith('.mp4'):
@@ -185,7 +190,7 @@ with open(prepped_input_data, 'w') as file:
 files = os.listdir(download_directory)
 labels_data = []
 
-prepped_output_data = '../data/temp_training/prepped_output_data.json'
+prepped_output_data = '../../data/temp_training/prepped_output_data.json'
 
 for file in files:
     if file.endswith('.jsonl'):

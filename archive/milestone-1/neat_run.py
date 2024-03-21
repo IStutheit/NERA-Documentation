@@ -7,10 +7,10 @@ import numpy as np
 import multiprocessing
 import pickle
 
-with open("../data/temp_training/prepped_input_data.json", 'r') as file:
+with open("../../data/temp_training/prepped_input_data.json", 'r') as file:
     input_data = json.load(file)
 
-with open("../data/temp_training/prepped_output_data.json", 'r') as file:
+with open("../../data/temp_training/prepped_output_data.json", 'r') as file:
     output_data = json.load(file)
 
     
@@ -35,6 +35,15 @@ def BinaryCrossEntropy(y_true, y_pred):
     term_1 = y_true * np.log(y_pred + 1e-7)
     return -np.mean(term_0+term_1, axis=0)
 
+def error(y_true, y_pred):
+    error = 0
+    for i in range(len(y_true)):
+        if i == 2 or i == 3:
+            error += (abs(y_true[i] - y_pred[i])*10)
+        else:
+            error += abs(y_true[i] - y_pred[i])
+    return error
+
 def eval_genome(genome, config):
     x = 0
     score = 0
@@ -46,9 +55,10 @@ def eval_genome(genome, config):
             #if (output).all() == 0:
                 #score += 1*(1 - BinaryCrossEntropy(output,output_data[i][j]))
             #else:
-            score += 1 - ((.913 * BinaryCrossEntropy(output_data[i][j][0:2] + output_data[i][j][4:], output[0:2] + output[4:]) + .087*mean_squared_error(output_data[i][j][2:4], output[2:4])) / 2)
+            #score += 1 - ((.913 * BinaryCrossEntropy(output_data[i][j][0:2] + output_data[i][j][4:], output[0:2] + output[4:]) + .087*mean_squared_error(output_data[i][j][2:4], output[2:4])) / 2)
+            score += 1 - error(output_data[i][j], output)
         net.reset()
-    return score/30000
+    return score/(len(input_data)*1200)
 
 def run(config_file):
     # Load configuration.
@@ -67,7 +77,7 @@ def run(config_file):
 
     # Run for up to 500 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 10000)
+    winner = p.run(pe.evaluate, 100)
 
     # Save the winner
     with open('winner.pkl', 'wb') as f:

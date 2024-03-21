@@ -1,6 +1,6 @@
 import os
 
-folder_path = '../data/temp_training'
+folder_path = '../../data/temp_training'
 
 # List all files in the folder
 files = os.listdir(folder_path)

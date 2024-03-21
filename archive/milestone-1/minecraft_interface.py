@@ -53,8 +53,8 @@ while not done:
     gobs = gobs/255
 
     output = winner_net.activate(gobs)
-    output[2] = output[2]*714
-    output[3] = output[3]*310
+    output[2] = output[2]*39.3
+    output[3] = output[3]*18.75
     
     
     if (output[0] >= .5):
@@ -67,7 +67,7 @@ while not done:
     else:
         action["back"] = 0
 
-    action["camera"] = [action["camera"][0] + output[2], action["camera"][1] + output[3]]
+    action["camera"] = [output[3], output[2]]
         
     if (output[4] >= .5):
         action["drop"] = 1
