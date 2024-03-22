@@ -1,3 +1,7 @@
+"""
+**Takes in multiple files in parallel and transforms the frames into grayscale images.**
+"""
+
 import cv2
 import numpy as np
 import os
@@ -7,9 +11,10 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 #------------------------------------------------------------
 def process_single_video(video_path, output_dir=None):
     """
-    Processes a single video file to extract and transform its frames into a list of normalized, 
-    flattened grayscale images.
-
+    ##Processes a single video file to extract and transform its frames into a list of normalized, flattened grayscale images.
+    
+    ---
+    
     Optionally saves all processed frames to a .npy file in the 
     specified output directory.
 
@@ -18,15 +23,23 @@ def process_single_video(video_path, output_dir=None):
 
     Each frame is resized to 25x25 pixels, converted to grayscale, flattened into a vector, 
     and normalized so that pixel values are in the range [0, 1].
+    
+    ---
+    
+    ### Arguments:
+    
+    > video_path (str): The path to the video file to be processed.   
 
-    Args:
-        video_path (str): The path to the video file to be processed.
-        output_dir (str, optional): The directory where processed frames will be saved as a .npy file. 
-                                    If None, frames are not saved to disk.
-
-    Returns:
-        tuple: A tuple containing the video file name and a list of numpy.ndarray, each containing 
-               the processed frames as 1D numpy arrays of normalized pixel values.
+    > output_dir (str, optional): The directory
+        where processed frames will be saved as a .npy file. 
+        If None, frames are not saved to disk.
+        
+    ### Returns:
+    
+    > tuple: A tuple containing the video file name and a 
+                list of numpy.ndarray, each containing 
+                the processed frames as 1D numpy arrays of normalized pixel values.
+    
     """
     
     frames = []
@@ -64,16 +77,22 @@ def process_single_video(video_path, output_dir=None):
 #------------------------------------------------------------
 def process_video_frames(video_paths, output_dir=None, num_workers=None):
     """
-    Processes multiple video files in parallel to extract and transform their frames.
+    ##Processes multiple video files in parallel to extract and transform their frames.
 
-    Args:
-        video_paths (list of str): The paths to the video files to be processed.
-        output_dir (str, optional): The directory where all processed frames will be saved as .npy files.
-        num_workers (int, optional): The maximum number of worker processes to use. If None, the number 
-                                     of workers is chosen automatically.
+    ---
 
-    Returns:
-        dict: A dictionary where keys are video file names and values are lists of numpy.ndarray, 
+    ### Arguments:
+    
+    >video_paths (list of str): The paths to the video files to be processed.
+    
+    >output_dir (str, optional): The directory where all processed frames will be saved as .npy files.
+    
+    >num_workers (int, optional): The maximum number of worker processes to use. If None, the number 
+                                    of workers is chosen automatically.
+
+    ###Returns:
+    
+    >dict: A dictionary where keys are video file names and values are lists of numpy.ndarray, 
               each containing the processed frames as 1D numpy arrays of normalized pixel values.
     """
     
