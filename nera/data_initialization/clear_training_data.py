@@ -1,12 +1,20 @@
+"""
+**Deletes all files in the specified directory.**
+"""
+
 import os
 
 def clear_training_data(data_dir):
     """
-    Deletes all files in the specified directory.
+    ##Deletes all files in the specified directory.
     Gotta be careful with this one!
+    
+    ---
 
-    Args:
-        data_dir (str): The path to the directory to be cleared.
+    ### Arguments:
+    
+    >data_dir (str): The path to the directory to be cleared.
+    
     """
     # List all files in the folder
     files = os.listdir(data_dir)
