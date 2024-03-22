@@ -1,3 +1,7 @@
+"""
+Grabs the urls from the contractor data to be downloaded and stored.
+"""
+
 import os
 import requests
 
@@ -7,13 +11,20 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 #------------------------------------------------------------
 def download_file(session, url, download_dir):
     """
-    Helper function to download a single file.
+    ##Helper function to download a single file.
+    
     If the file already exists in the download directory, it will not be downloaded again.
 
-    Args:
-    - session (requests.Session): The session to use for downloading the file.
-    - url (str): The URL of the file to download.
-    - download_dir (str): The directory to download the file to.
+    ---
+
+    ###Arguments:
+    
+    >session (requests.Session): The session to use for downloading the file.
+    
+    >url (str): The URL of the file to download.
+    
+    >download_dir (str): The directory to download the file to.
+    
     """
 
     # Get the file name from the URL
@@ -40,12 +51,18 @@ def download_file(session, url, download_dir):
 #------------------------------------------------------------
 def download_files(urls, download_dir, num_workers=None):
     """
-    Downloads each file from the given list of URLs to the specified directory using multiple workers.
+    ##Downloads each file from the given list of URLs to the specified directory using multiple workers.
+    
+    ---
 
-    Args:
-    - urls (list of str): The URLs of the files to download.
-    - download_dir (str): The directory to download the files to.
-    - num_workers (int, optional): The number of worker threads to use for downloading files. If None, the number
+    ###Arguments:
+    
+    >urls (list of str): The URLs of the files to download.
+    
+    >download_dir (str): The directory to download the files to.
+    
+    >num_workers (int, optional): The number of worker threads to use for downloading files. If None, the number
+    
     """
 
     # STATUS MESSAGE
