@@ -77,7 +77,7 @@ def run(config_file):
 
     # Run for up to 500 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 100)
+    winner = p.run(pe.evaluate, 1000)
 
     # Save the winner
     with open('winner.pkl', 'wb') as f:

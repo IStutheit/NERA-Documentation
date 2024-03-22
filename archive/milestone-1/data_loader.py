@@ -139,7 +139,7 @@ with open(json_file_path, 'r') as file:
 basedir = data['basedir']
 
 # Iterate through the links and download the files
-for i in range(100):  # Assuming the links are stored in a list under the key 'links'
+for i in range(75):  # Assuming the links are stored in a list under the key 'links'
     # Get the file name from the link
     file_name = data['relpaths'][i].split('/')[-1]
     file_name_jsonl = data['relpaths'][i].split('/')[-1][:-3] + "jsonl"
