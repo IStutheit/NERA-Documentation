@@ -23,7 +23,6 @@ def parse_urls_from_json(file_path):
     #STATUS MESSAGE
     print("\nExtracting URLs...")
 
-
     # Open the JSON file and load its content
     with open(file_path, 'r') as file:
         data = json.load(file)
@@ -32,7 +31,6 @@ def parse_urls_from_json(file_path):
     base_dir = data['basedir']
     rel_paths = data['relpaths']
     
-
     full_urls = []
     
     for rel_path in rel_paths:
@@ -44,7 +42,6 @@ def parse_urls_from_json(file_path):
 
         full_urls.append(mp4_url)
         full_urls.append(jsonl_url)
-
     
     #Only use the first 5 datasets for testing purposes. TODO switch this back to using all datasets when done testing
     full_urls = full_urls[:10]
@@ -53,11 +50,8 @@ def parse_urls_from_json(file_path):
     urlFilenames = [os.path.basename(url).split('.')[0] for url in full_urls]
     dataset_names = list(set(urlFilenames))
         
-
-    
     #STATUS MESSAGE
     print(f"Extracted {len(full_urls)} URLs for {len(set(dataset_names))} unique datasets from {file_path}")
-    
 
     # Return the list of URLs
     return full_urls
@@ -70,10 +64,12 @@ def parse_urls_from_json(file_path):
 # Example usage
 #------------------------------------------------------------
 if __name__ == "__main__":
-    # Test the function with a sample JSON file
-    #only print up to the first 5 url pairs (10 total urls to avoid cluttering the output)
-    file_path = '../../data/Contractor_Index_Files/all_6xx_Jun_29.json' # BE SURE TO UPDATE THIS IF WE MOVE THIS SCRIPT
-    #file_path = '../../data/Contractor_Index_Files/all_9xx_Jun_29.json' # BE SURE TO UPDATE THIS IF WE MOVE THIS SCRIPT
-    urls = parse_urls_from_json(file_path)
+
+    proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    contractor_index_files = os.path.join(proj_root, 'data', 'Contractor_Index_Files')
+    all_6xx_Jun_29 = os.path.join(contractor_index_files, 'all_6xx_Jun_29.json')
+    #all_9xx_Jun_29 = os.path.join(contractor_index_files, 'all_9xx_Jun_29.json')
+
+    urls = parse_urls_from_json(all_6xx_Jun_29)
     print(urls)
 #------------------------------------------------------------
