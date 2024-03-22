@@ -6,6 +6,10 @@
 
 Milestone 1: Basic implementation and testing of NEAT Algorithm implemented.
 
+Milestone 2: More refined implentation of NEAT. How to format network input and output has largely been solved.
+We used NEAT to evolve a population of 150 networks over 400 generations. Networks were initially had 625 inputs,
+300 hidden nodes, and 22 output nodes. 6 minutes of tree chopping footage was used. This took ~100 minutes to run on 10 cores.
+
 ## Build and Install
 
 Open a terminal to the cloned directory.
