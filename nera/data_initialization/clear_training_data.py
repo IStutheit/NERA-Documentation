@@ -1,5 +1,6 @@
 import os
 
+
 def clear_training_data(data_dir):
     """
     Deletes all files in the specified directory.
@@ -22,10 +23,11 @@ def clear_training_data(data_dir):
 
 
 
-
 #------------------------------------------------------------
 # EXAMPLE USAGE
 #------------------------------------------------------------
 if __name__ == "__main__":
     clear_training_data()
     print("\nData cleared.\n")
+#------------------------------------------------------------
+

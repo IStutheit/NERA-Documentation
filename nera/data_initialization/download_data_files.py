@@ -74,10 +74,15 @@ def download_files(urls, download_dir, num_workers=None):
 # Example usage
 #------------------------------------------------------------
 if __name__ == "__main__":
+
     from parse_urls_from_json import parse_urls_from_json
-    file_path = '../../data/Contractor_Index_Files/all_6xx_Jun_29.json'
-    #file_path = '../data/Contractor_Index_Files/all_9xx_Jun_29.json'
-    download_dir = '../../data/temp_training/'
-    urls = parse_urls_from_json(file_path)
+
+    proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    contractor_index_files = os.path.join(proj_root, 'data', 'Contractor_Index_Files')
+    all_6xx_Jun_29 = os.path.join(contractor_index_files, 'all_6xx_Jun_29.json')
+    download_dir = os.path.join(proj_root, 'data', 'temp_training')
+
+    urls = parse_urls_from_json(all_6xx_Jun_29)
     download_files(urls, download_dir)  # Automatically determines the number of workers without specifying the num_workers argument
 #------------------------------------------------------------
+

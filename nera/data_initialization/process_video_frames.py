@@ -4,6 +4,7 @@ import os
 
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
+
 #------------------------------------------------------------
 def process_single_video(video_path, output_dir=None):
     """
@@ -105,8 +106,11 @@ def process_video_frames(video_paths, output_dir=None, num_workers=None):
 # EXAMPLE USAGE
 #------------------------------------------------------------
 if __name__ == "__main__":
-    video_dir_path = "../../data/temp_training/"
-    output_dir = "../../data/temp_training_processed/"
+
+    proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+    video_dir_path = os.path.join(proj_root, 'data', 'temp_training')
+    output_dir = os.path.join(proj_root, 'data', 'temp_training_processed')
 
     if os.path.exists(video_dir_path):
         video_files = [f for f in os.listdir(video_dir_path) if f.endswith(".mp4")]
@@ -117,3 +121,4 @@ if __name__ == "__main__":
                 print(f"Processed {len(frames)} frames from {video_name}.")
         else:
             print(f"No .mp4 files found in {video_dir_path}")
+#------------------------------------------------------------
