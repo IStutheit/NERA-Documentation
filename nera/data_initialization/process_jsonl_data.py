@@ -138,14 +138,13 @@
 
 # # Call the main function with the paths to your files
 # if __name__ == "__main__":
-#     # Specify the path to your config and actions JSON files here
 #     config_file_path = r'/Users/samblooms/Downloads/Player129-f153ac423f61-20210617-171344-options.json'
 #     actions_file_path = r'/Users/samblooms/Dev/school/Capstone/CSCI4970-MC-GamePlayingBot/data/temp_training/Player129-f153ac423f61-20210617-171344.jsonl'
 #     main(config_file_path, actions_file_path)
 
 
 #//============================================================ 
-
+import os
 import json
 
 def load_json_lines_file(file_path):
@@ -201,7 +200,7 @@ def list_inventory_changes_with_frames(inventory_changes):
 #     # List all changes along with the frames they occur in
 #     inventory_changes_with_frames = list_inventory_changes_with_frames(inventory_changes)
 
-#     # Displaying first 10 for brevity; you can adjust as needed or process further
+#     # Displaying first 10 for brevity
 #     print("Inventory Changes (first 10):", json.dumps(inventory_changes_with_frames[:10], indent=4))
 
 # def process_player_and_mouse_movements(actions):
@@ -253,7 +252,6 @@ def list_inventory_changes_with_frames(inventory_changes):
 
 
 
-#     # For demonstration, print summaries of both inventory and movement changes
 
 #     #print("Inventory Changes (sample):", json.dumps(inventory_changes_with_frames[:5], indent=4))
 #     #print("Inventory Changes (sample):", json.dumps(inventory_changes_with_frames, indent=4))
@@ -331,7 +329,6 @@ def list_inventory_changes_with_frames(inventory_changes):
 #     print("Total Z Player Movement: ", total_z_player_movement)
 
 # if __name__ == "__main__":
-#     #file_path = 'path_to_your_file.jsonl'  # Update this to the path of your JSON Lines file
 #     file_path = r'/Users/samblooms/Dev/school/Capstone/CSCI4970-MC-GamePlayingBot/data/temp_training/Player129-f153ac423f61-20210617-171344.jsonl'
 #     main(file_path)
 
@@ -555,7 +552,6 @@ def list_inventory_changes_with_frames(inventory_changes):
 #     print("Bounding Box:", json.dumps(bounding_box, indent=4))
 
 # if __name__ == "__main__":
-#     #file_path = 'path_to_your_file.jsonl'  # Update this to the path of your JSON Lines file
 #     file_path = r'/Users/samblooms/Dev/school/Capstone/CSCI4970-MC-GamePlayingBot/data/temp_training/Player129-f153ac423f61-20210617-171344.jsonl'
 #     main(file_path)
 
@@ -722,13 +718,18 @@ def process_player_data(file_path):
         #"stats_events": stats_events 
     }
 
-def main(file_path):
+
+
+
+
+#------------------------------------------------------------
+# EXAMPLE USAGE
+#------------------------------------------------------------
+if __name__ == "__main__":
+
+    proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    file_path = os.path.join(proj_root, 'data', 'temp_training', 'Player129-f153ac423f61-20210617-171344.jsonl')
+
     player_data = process_player_data(file_path)
     print("Player Data:", json.dumps(player_data, indent=4))
-
-
-
-if __name__ == "__main__":
-    #file_path = 'path_to_your_file.jsonl'  # Update this to the path of your JSON Lines file
-    file_path = r'/Users/samblooms/Dev/school/Capstone/CSCI4970-MC-GamePlayingBot/data/temp_training/Player129-f153ac423f61-20210617-171344.jsonl'
-    main(file_path)
+#------------------------------------------------------------
