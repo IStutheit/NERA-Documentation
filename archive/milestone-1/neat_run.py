@@ -38,10 +38,10 @@ def BinaryCrossEntropy(y_true, y_pred):
 def error(y_true, y_pred):
     error = 0
     for i in range(len(y_true)):
-        if i == 2 or i == 3:
-            error += (abs(y_true[i] - y_pred[i])*10)
-        else:
-            error += abs(y_true[i] - y_pred[i])
+##        if i == 2 or i == 3:
+##            error += (abs(y_true[i] - y_pred[i])*10)
+##        else:
+        error += abs(y_true[i] - y_pred[i])
     return error
 
 def eval_genome(genome, config):
@@ -56,7 +56,7 @@ def eval_genome(genome, config):
                 #score += 1*(1 - BinaryCrossEntropy(output,output_data[i][j]))
             #else:
             #score += 1 - ((.913 * BinaryCrossEntropy(output_data[i][j][0:2] + output_data[i][j][4:], output[0:2] + output[4:]) + .087*mean_squared_error(output_data[i][j][2:4], output[2:4])) / 2)
-            score += 1 - error(output_data[i][j], output)
+            score += 1 - mean_squared_error(output_data[i][j], output)
         net.reset()
     return score/(len(input_data)*1200)
 

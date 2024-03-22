@@ -53,8 +53,8 @@ while not done:
     gobs = gobs/255
 
     output = winner_net.activate(gobs)
-    output[2] = output[2]*2498.4016100000003
-    output[3] = output[3]*50.250004999999994
+    output[2] = output[2]*50
+    output[3] = output[3]*50
     
     
     if (output[0] >= .5):

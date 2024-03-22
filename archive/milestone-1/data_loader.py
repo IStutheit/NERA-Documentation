@@ -3,6 +3,7 @@ import json
 import numpy as np
 import requests
 import os
+import random
 
 
 def process_video(video_path):
@@ -45,7 +46,7 @@ def process_labels(file_path):
 
     for json_str in json_objects:
         if json_str.strip():  # Skip empty lines
-            label = [0 for i in range(22)]
+            label = [random.uniform(.1, 0.4) for i in range(22)]
             data = json.loads(json_str)
             key_presses = data.get('keyboard', None).get('keys', None)
             mouse_presses = data.get('mouse', None).get('buttons',None)
@@ -205,14 +206,23 @@ for i in range(len(labels_data)):
     for j in range(len(labels_data[i])):
         if abs(labels_data[i][j][2]) > max_dx:
             max_dx = abs(labels_data[i][j][2])
+            print(max_dx)
+            print()
 
         if abs(labels_data[i][j][3]) > max_dy:
             max_dy = abs(labels_data[i][j][3])
+            print(max_dy)
+            
 
 for i in range(len(labels_data)):
     for j in range(len(labels_data[i])):
-        labels_data[i][j][2] = labels_data[i][j][2]/max_dx
-        labels_data[i][j][3] = labels_data[i][j][3]/max_dy
+        labels_data[i][j][2] = labels_data[i][j][2]/50#max_dx
+        if labels_data[i][j][2] > 1:
+            labels_data[i][j][2] = 1
+        
+        labels_data[i][j][3] = labels_data[i][j][3]/50#max_dy
+        if labels_data[i][j][3] > 1:
+            labels_data[i][j][3] = 1
 
 print(max_dx)
 print(max_dy)
