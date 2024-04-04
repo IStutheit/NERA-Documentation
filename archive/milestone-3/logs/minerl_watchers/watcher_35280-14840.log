@@ -1,0 +1,11 @@
+[32m2024-03-21 18:18:42[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m Process watcher started between parent 35280 and child 14840 
+[32m2024-03-21 18:21:01[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m Parent is not running, hence we need terminate the child.
+[32m2024-03-21 18:21:01[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m About to reap process tree of 14840:cmd.exe:C:\Windows\System32\cmd.exe i running, owner 35280, printing process tree status in termination order:
+[32m2024-03-21 18:21:01[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m 	-7424:java.exe:C:\Program Files\Java\jdk1.8.0_361\bin\java.exe i running, owner 14840
+[32m2024-03-21 18:21:01[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m 	-41420:conhost.exe:C:\Windows\System32\conhost.exe i running, owner 14840
+[32m2024-03-21 18:21:01[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m 	-14840:cmd.exe:C:\Windows\System32\cmd.exe i running, owner 35280
+[32m2024-03-21 18:21:01[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m Trying to SIGTERM 7424:java.exe:C:\Program Files\Java\jdk1.8.0_361\bin\java.exe i running, owner 14840
+[32m2024-03-21 18:21:02[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m Process psutil.Process(pid=7424, name='java.exe', status='terminated', exitcode=15, started='18:18:40') terminated with exit code None
+[32m2024-03-21 18:21:02[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m Trying to SIGTERM 41420:conhost.exe:C:\Windows\System32\conhost.exe i running, owner 14840
+[32m2024-03-21 18:21:02[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m Process psutil.Process(pid=41420, name='conhost.exe', status='terminated', exitcode=15, started='18:18:39') terminated with exit code None
+[32m2024-03-21 18:21:02[0m [35mMSI[0m [34mprocess_watcher[36028][0m [1;30mINFO[0m Process psutil.Process(pid=14840, name='cmd.exe', status='terminated', started='18:18:39') does not exist or is zombie.

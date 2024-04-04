@@ -1,0 +1,11 @@
+[32m2024-03-28 13:43:10[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m Process watcher started between parent 17216 and child 35184 
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m Parent is not running, hence we need terminate the child.
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m About to reap process tree of 35184:cmd.exe:C:\Windows\System32\cmd.exe i running, owner 17216, printing process tree status in termination order:
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m 	-26328:java.exe:C:\Program Files\Java\jdk1.8.0_361\bin\java.exe i running, owner 35184
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m 	-17596:conhost.exe:C:\Windows\System32\conhost.exe i running, owner 35184
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m 	-35184:cmd.exe:C:\Windows\System32\cmd.exe i running, owner 17216
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m Trying to SIGTERM 26328:java.exe:C:\Program Files\Java\jdk1.8.0_361\bin\java.exe i running, owner 35184
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m Process psutil.Process(pid=26328, name='java.exe', status='terminated', exitcode=15, started='13:43:07') terminated with exit code None
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m Trying to SIGTERM 17596:conhost.exe:C:\Windows\System32\conhost.exe i running, owner 35184
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m Process psutil.Process(pid=17596, name='conhost.exe', status='terminated', exitcode=15, started='13:43:07') terminated with exit code None
+[32m2024-03-28 13:47:12[0m [35mMSI[0m [34mprocess_watcher[42212][0m [1;30mINFO[0m Process psutil.Process(pid=35184, name='cmd.exe', status='terminated', started='13:43:07') does not exist or is zombie.
