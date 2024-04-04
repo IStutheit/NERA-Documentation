@@ -140,7 +140,7 @@ with open(json_file_path, 'r') as file:
 basedir = data['basedir']
 
 # Iterate through the links and download the files
-for i in range(350):  # Assuming the links are stored in a list under the key 'links'
+for i in range(100):  # Assuming the links are stored in a list under the key 'links'
     # Get the file name from the link
     file_name = data['relpaths'][i].split('/')[-1]
     file_name_jsonl = data['relpaths'][i].split('/')[-1][:-3] + "jsonl"
@@ -222,13 +222,17 @@ for i in range(len(labels_data)):
         avg_dx_abs += abs(labels_data[i][j][2])
         avg_dy_abs += abs(labels_data[i][j][3])
         num += 1
-        labels_data[i][j][2] = labels_data[i][j][2]/1.8#max_dx
+        labels_data[i][j][2] = labels_data[i][j][2]/1.85#max_dx
         if labels_data[i][j][2] > 1:
             labels_data[i][j][2] = 1
+        elif labels_data[i][j][2] < -1:
+            labels_data[i][j][2] = -1
         
-        labels_data[i][j][3] = labels_data[i][j][3]/.7#max_dy
+        labels_data[i][j][3] = labels_data[i][j][3]/.77#max_dy
         if labels_data[i][j][3] > 1:
             labels_data[i][j][3] = 1
+        elif labels_data[i][j][3] < -1:
+            labels_data[i][j][3] = -1
 
 print(max_dx)
 print(max_dy)

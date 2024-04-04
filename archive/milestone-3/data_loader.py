@@ -225,10 +225,14 @@ for i in range(len(labels_data)):
         labels_data[i][j][2] = labels_data[i][j][2]/1.8#max_dx
         if labels_data[i][j][2] > 1:
             labels_data[i][j][2] = 1
+        elif labels_data[i][j][2] < -1:
+            labels_data[i][j][2] = -1
         
         labels_data[i][j][3] = labels_data[i][j][3]/.7#max_dy
         if labels_data[i][j][3] > 1:
             labels_data[i][j][3] = 1
+        elif labels_data[i][j][3] < -1:
+            labels_data[i][j][3] = -1
 
 print(max_dx)
 print(max_dy)
