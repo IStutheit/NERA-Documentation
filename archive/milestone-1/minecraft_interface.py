@@ -15,7 +15,7 @@ with open("winner.pkl", 'rb') as f:
     
 winner_net = neat.nn.RecurrentNetwork.create(winner, config)
 
-env = gym.make("MineRLBasaltBuildVillageHouse-v0")
+env = gym.make("MineRLBasaltFindCave-v0")
 print(env.action_space)
 
 obs = env.reset()
@@ -53,8 +53,8 @@ while not done:
     gobs = gobs/255
 
     output = winner_net.activate(gobs)
-    output[2] = output[2]*1.8
-    output[3] = output[3]*.7
+    output[2] = output[2]*1.85
+    output[3] = output[3]*.77
     
     
     if (output[0] >= .5):

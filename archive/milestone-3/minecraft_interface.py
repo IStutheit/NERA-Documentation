@@ -53,8 +53,8 @@ while not done:
     gobs = gobs/255
 
     output = winner_net.activate(gobs)
-    output[2] = output[2]*1.8
-    output[3] = output[3]*.7
+    output[2] = output[2]#*1.8
+    output[3] = output[3]#*.7
     
     
     if (output[0] >= .5):
@@ -162,14 +162,14 @@ while not done:
     
             
     action["ESC"] = 0
-    print()
-    print()
-    print()
-    print(output)
-    print()
-    print(action)
-    print()
-    print()
-    print()
+##    print()
+##    print()
+##    print()
+##    print(output)
+##    print()
+##    print(action)
+##    print()
+##    print()
+##    print()
     obs, reward, done, _ = env.step(action)
     env.render()
