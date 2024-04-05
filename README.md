@@ -10,6 +10,15 @@ Milestone 2: More refined implentation of NEAT. How to format network input and 
 We used NEAT to evolve a population of 150 networks over 400 generations. Networks were initially had 625 inputs,
 300 hidden nodes, and 22 output nodes. 6 minutes of tree chopping footage was used. This took ~100 minutes to run on 10 cores.
 
+Milestone 3: For this milestone, we trained a model on 45 minutes of training data. The training data consists of player's chopping down trees.
+In the demo video, a context window is mentioned. The context window is how many previous events the agent is aware of. During training, the agent has a context
+window of 1200 time steps - this is because a given tree chop video is 60 seconds at 20 frames per second. So, the nodes in the network aren't reset back to 0
+until the end of a sample is reached. In practice, the context window can be adjusted and will alter performance. 
+
+With 45 minutes of training data, agents are demonstrating more complex behavior but it seems to be a result of overfitting. Agents in the demo video break blocks, 
+slowly look down, and occassionally move backward. This is still an improvement over the previous agents, many of which would not do anything. Overall, while 
+the agents aren't doing nothing, they seem to take the same or similar action repeatedly.
+
 ## Build and Install
 
 Open a terminal to the cloned directory.
