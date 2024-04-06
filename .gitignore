@@ -27,7 +27,8 @@ species.svg
 #------------------------------------------------------------
 
 #exclude the entire temp temp_training directory (and any variations of it used for testing)
-*/temp_training*
+data/*
+!data/Contractor_Index_Files/*
 
 # The MP4 files should be covered by the temp_training directory, but we will leave it for now
 # just in case they end up elsewhere. That would be annoying to have to push/pull them all the time
