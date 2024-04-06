@@ -6,24 +6,28 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from nera.utils.output_helpers import HORIZONTAL_LINE
 
 #------------------------------------------------------------
-def check_urls(urls, session):
+def check_urls(urls, session, limit=None):
     """
-    Checks the availability of each URL in a list using a HEAD request.
+    Checks the availability of each URL in a list using a HEAD request, stopping when the limit of accessible URLs is reached.
     Args:
     - urls (list of str): The URLs to check.
     - session (requests.Session): The session used for making requests.
+    - limit (int, optional): The maximum number of accessible URLs to find before stopping. If None, all URLs are checked.
     Returns:
     - dict: A dictionary with lists of 'accessible' and 'inaccessible' URLs.
     """
     results = {"accessible": [], "inaccessible": []}
     for url in urls:
+        if limit is not None and len(results["accessible"]) >= limit:
+            # Stop checking more URLs once the limit of accessible URLs is reached
+            break
         try:
             response = session.head(url, allow_redirects=True)
             if response.status_code == 200:
                 results["accessible"].append(url)
             else:
                 results["inaccessible"].append(url)
-        except requests.RequestException as e:
+        except requests.RequestException:
             results["inaccessible"].append(url)
     return results
 #------------------------------------------------------------
@@ -66,7 +70,7 @@ def download_file(session, url, download_dir):
 
 
 #------------------------------------------------------------
-def download_files(urls, download_dir, num_workers=None):
+def download_files(urls, download_dir, limit=None, num_workers=None):
     """
     Downloads each file from the given list of URLs to the specified directory using multiple workers.
     Tracks downloaded files and writes an index of downloaded file paths to a JSON file.
@@ -85,8 +89,8 @@ def download_files(urls, download_dir, num_workers=None):
 
     results = {
         "downloaded": [],
-        "unavailable": [],  
         "skipped": [],
+        "unavailable": [],  
         "failed": []
     }
 
@@ -95,15 +99,27 @@ def download_files(urls, download_dir, num_workers=None):
 
     #STATUS MESSAGE
     print("\n" + HORIZONTAL_LINE)
-    print(f"Attempting to download {len(urls)} files to {download_dir}...\n")
-
+    print("Checking the availability of URLs...")
 
     # Check the availability of each URL
     with requests.Session() as session:
-        url_status = check_urls(urls, session)
+        # Pass the limit to the check_urls function
+        url_status = check_urls(urls, session, limit=limit)
         results["unavailable"] = url_status["inaccessible"]
-        #remove the unavailable urls from the list of urls
         urls = url_status["accessible"]
+
+
+    # If a limit is specified, only download the first 'limit' files. If there are fewer available files than the limit, download all available files, and adjust the limit message.
+    if limit is not None:
+        if len(urls) > limit:
+            urls = urls[:limit]
+            print(f"{len(urls)} files were available, but limiting to {limit} files per request.") #STATUS MESSAGE
+        elif len(urls) < limit:
+            print(f"Only {len(urls)} files were available, even though the limit was set to {limit}.") #STATUS MESSAGE
+
+    
+    #STATUS MESSAGE
+    print(f"Attempting to download files...\n")
 
     with requests.Session() as session, ThreadPoolExecutor(max_workers=num_workers) as executor:
         futures = {executor.submit(download_file, session, url, download_dir): url for url in urls}
@@ -117,6 +133,10 @@ def download_files(urls, download_dir, num_workers=None):
                 downloaded_files_index.append(file_path)  # Track the file path
             else:
                 results["failed"].append(result)
+
+    #sort each list in the results dictionary alphabetically
+    for key, value in results.items():
+        results[key] = sorted(value)
 
     # Write the list of downloaded files to a JSON file
     with open(os.path.join(download_dir, 'NERA_TRAINING_DATA_INDEX_FILE.json'), 'w') as f:
@@ -153,6 +173,6 @@ if __name__ == "__main__":
     download_dir = os.path.join(proj_root, 'data', 'tree_chop_data')
 
     urls = parse_urls_from_json(json_file)
-    download_files(urls, download_dir)  # Automatically determines the number of workers without specifying the num_workers argument
+    download_files(urls, download_dir, limit=10)  # Automatically determines the number of workers without specifying the num_workers argument
 #------------------------------------------------------------
 

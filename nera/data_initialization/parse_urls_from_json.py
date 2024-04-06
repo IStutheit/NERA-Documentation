@@ -61,8 +61,11 @@ def parse_urls_from_json(file_path, limit=None):
 
     #STATUS MESSAGE
     print(f"Extracted {len(full_urls)} URLs for {len(set(dataset_names))} unique datasets from {file_path}")
-    for name in dataset_names:
-        print(name)
+
+    #avoid printing all the dataset names if there are too many (powershell apparently REALLY hates massive print statements)
+    if len(set(dataset_names)) < 100:
+        for name in dataset_names:
+            print(name)
     print(HORIZONTAL_LINE + "\n")
 
 
