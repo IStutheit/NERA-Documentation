@@ -5,9 +5,6 @@ on:
   push:
     branches:
       - main
-    # Alternative: only build for tags.
-    # tags:
-    #   - '*'
 
 # security: restrict permissions for CI jobs.
 permissions:
@@ -23,13 +20,13 @@ jobs:
         with:
           python-version: '3.12'
 
-      # ADJUST THIS: install all dependencies (including pdoc)
+      # Install Dependencies
       - run: pip install pdoc
       - run: pip install numpy
       - run: pip install opencv-python
       - run: pip install requests
-      # ADJUST THIS: build your documentation into docs/.
-      # We use a custom build script for pdoc itself, ideally you just run `pdoc -o docs/ ...` here.
+
+      #Create and upload files
       - run: pdoc ./nera -o ./docs
 
       - uses: actions/upload-pages-artifact@v3
