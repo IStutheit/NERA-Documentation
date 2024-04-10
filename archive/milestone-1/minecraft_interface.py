@@ -7,15 +7,16 @@ import numpy as np
 
 config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                     "config")
+                     "../Capstone/GitHubCode/CSCI4970-MC-GamePlayingBot/archive/milestone-1/config")
 
 # Load the winner
-with open("winner.pkl", 'rb') as f:
+with open("../Capstone/GitHubCode/CSCI4970-MC-GamePlayingBot/archive/milestone-1/winner.pkl", 'rb') as f:
     winner = pickle.load(f)
     
+
 winner_net = neat.nn.RecurrentNetwork.create(winner, config)
 
-env = gym.make('MineRLBasaltFindCave-v0')
+env = gym.make('')
 print(env.action_space)
 
 obs = env.reset()
@@ -36,7 +37,7 @@ for key in action:
 
 x = 0
 
-while not done:
+for i in range(2):
 
     if x%3000 == 0:
         winner_net.reset()
@@ -55,7 +56,7 @@ while not done:
     output = winner_net.activate(gobs)
     output[2] = output[2]*714
     output[3] = output[3]*310
-    
+
     
     if (output[0] >= .5):
         action["attack"] = 1
@@ -159,9 +160,9 @@ while not done:
         action["use"] = 1
     else:
         action["use"] = 0
-    
-            
+          
     action["ESC"] = 0
+    """  
     print()
     print()
     print()
@@ -170,6 +171,7 @@ while not done:
     print(action)
     print()
     print()
-    print()
+    print() 
+    """
     obs, reward, done, _ = env.step(action)
     env.render()
