@@ -1,7 +1,7 @@
 import json
 import os
 
-from nera.utils.output_helpers import HORIZONTAL_LINE
+#from nera.utils.output_helpers import HORIZONTAL_LINE
 
 
 # TODO - There are two additional URLS that are available for each Contractor link. Do we need to be using these? 
@@ -24,7 +24,7 @@ def parse_urls_from_json(file_path, limit=None):
     """
 
     #STATUS MESSAGE
-    print("\n" + HORIZONTAL_LINE)
+    print("\n--------------------------------------------")
     print("Attempting to extract URLs...\n")
 
 
@@ -66,7 +66,7 @@ def parse_urls_from_json(file_path, limit=None):
     if len(set(dataset_names)) < 100:
         for name in dataset_names:
             print(name)
-    print(HORIZONTAL_LINE + "\n")
+    print("--------------------------------------------\n")
 
 
     # Return the list of URLs

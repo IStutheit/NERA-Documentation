@@ -3,7 +3,7 @@ import os
 import requests
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from nera.utils.output_helpers import HORIZONTAL_LINE
+#from nera.utils.output_helpers import HORIZONTAL_LINE
 
 #------------------------------------------------------------
 def check_urls(urls, session, limit=None):
@@ -98,7 +98,7 @@ def download_files(urls, download_dir, limit=None, num_workers=None):
 
 
     #STATUS MESSAGE
-    print("\n" + HORIZONTAL_LINE)
+    print("\n--------------------------------------------")
     print("Checking the availability of URLs...")
 
     # Check the availability of each URL
@@ -150,7 +150,7 @@ def download_files(urls, download_dir, limit=None, num_workers=None):
         print(f"\n{key.capitalize()} ({len(value)}):")
         for message in value:
             print(f"- {message}")
-    print(HORIZONTAL_LINE + "\n")
+    print("--------------------------------------------\n")
 
 #------------------------------------------------------------
                 

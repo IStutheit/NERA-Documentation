@@ -19,6 +19,13 @@ With 45 minutes of training data, agents are demonstrating more complex behavior
 slowly look down, and occassionally move backward. This is still an improvement over the previous agents, many of which would not do anything. Overall, while 
 the agents aren't doing nothing, they seem to take the same or similar action repeatedly.
 
+Milestone 4: This milestone was all about code refinement. Much of the code has been moved to the
+'nera' folder. Additionally, downloading data and preparing it has been improved. 
+Training footage now downloads much quicker and prepared data is stored in the form of 
+.pkl files rather than .json files which provides a great size reduction.
+
+TODO - Add info about training run and bot performance.
+
 ## Build and Install
 
 Open a terminal to the cloned directory.
