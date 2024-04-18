@@ -73,7 +73,7 @@ def run(config_file):
     p = neat.Population(config)
     
     #Define the amount of generations to run
-    GENERATIONS = 150
+    GENERATIONS = 100
 
     # Add a stdout reporter to show progress in the terminal.
     p.add_reporter(neat.StdOutReporter(True))
