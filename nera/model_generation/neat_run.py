@@ -10,10 +10,13 @@ import time
 import sys
 import io
 
-with open("../../data/tree_chop_data/prepped_input_data.pkl", 'rb') as file:
+proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')) #clear existing training data
+#with open("../../data/tree_chop_data/prepped_input_data.pkl", 'rb') as file:
+with open(os.path.join(proj_root, 'data', 'tree_chop_data', 'prepped_input_data.pkl'), 'rb') as file:
     input_data = pickle.load(file)
 
-with open("../../data/tree_chop_data/prepped_output_data.pkl", 'rb') as file:
+#with open("../../data/tree_chop_data/prepped_output_data.pkl", 'rb') as file:
+with open(os.path.join(proj_root, 'data', 'tree_chop_data', 'prepped_output_data.pkl'), 'rb') as file:
     output_data = pickle.load(file)
 
     
