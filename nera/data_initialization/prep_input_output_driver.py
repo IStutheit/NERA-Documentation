@@ -21,7 +21,7 @@ def main():
 
     urls = parse_urls_from_json(json_file)
     #download_files(urls, download_dir, limit=MINUTES_OF_FOOTAGE*2) #must multiply by 2 to account for jsonl files which are paired with the mp4 files
-    download_files(urls, gameplay_data_dir, limit=MINUTES_OF_FOOTAGE) #must multiply by 2 to account for jsonl files which are paired with the mp4 files
+    download_files(urls, gameplay_data_dir, limit=MINUTES_OF_FOOTAGE*2) #must multiply by 2 to account for jsonl files which are paired with the mp4 files
 
 
     videoProcessor = VideoProcessor(WIDTH_HEIGHT) #process videos
