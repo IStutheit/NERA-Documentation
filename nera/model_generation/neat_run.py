@@ -77,7 +77,7 @@ def run(config_file):
 
     # Add a stdout reporter to show progress in the terminal.
     p.add_reporter(neat.StdOutReporter(True))
-    p.add_reporter(neat.Checkpointer(generation_interval= GENERATIONS/3))
+    p.add_reporter(neat.Checkpointer(generation_interval= int(GENERATIONS/3)))
     
     print("-- NEAT Starting --")
     
