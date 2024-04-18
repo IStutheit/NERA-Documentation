@@ -5,6 +5,10 @@ import math
 import numpy as np
 import multiprocessing
 import pickle
+import datetime
+import time
+import sys
+import io
 
 with open("../../data/tree_chop_data/prepped_input_data.pkl", 'rb') as file:
     input_data = pickle.load(file)
@@ -67,36 +71,73 @@ def run(config_file):
 
     # Create the population, which is the top-level object for a NEAT run.
     p = neat.Population(config)
+    
+    #Define the amount of generations to run
+    GENERATIONS = 150
 
     # Add a stdout reporter to show progress in the terminal.
     p.add_reporter(neat.StdOutReporter(True))
-    stats = neat.StatisticsReporter()
-    p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(5))
+    p.add_reporter(neat.Checkpointer(generation_interval= GENERATIONS/3))
+    
+    print("-- NEAT Starting --")
+    
+    #Redirect the stdout to an IO object
+    stream = io.StringIO()
+    old_stdout = sys.stdout
+    sys.stdout = stream
+   
+    #Keep track of how long the process took
+    start = time.time()
+
+    
 
     # Run for up to 500 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 100)
+    winner = p.run(pe.evaluate, GENERATIONS)
+    
+    #Finish the timer for how long Neat.run() took
+    end = time.time()
+    
+    #Restore stdout to original
+    sys.stdout = old_stdout
 
     # Save the winner
     with open('winner.pkl', 'wb') as f:
         pickle.dump(winner, f)
+        
+
+
+    #Display the latest generation to console
+    print("\nLatest Generation:")
+    data = stream.getvalue().splitlines()[-12:]
+    for i in data:
+        print(i)
+
+
+    date = datetime.datetime.now()
+    outputFile = local_dir + "/" +"NEAT_Output_" + date.strftime("%d-%b-%Y") + ".txt"
+    with open(outputFile, "w+") as f:
+
+        f.write(date.strftime("%d-%b-%Y-%H:%M%Z"))
+        f.write("\nNEAT ran for: " + str(end-start) + " seconds\n")
+
+        f.write(stream.getvalue())
 
     # Display the winning genome.
-    print('\nBest genome:\n{!s}'.format(winner))
+    #print('\nBest genome:\n{!s}'.format(winner))
 
     # Show output of the most fit genome against training data.
-    print('\nOutput:')
-    winner_net = neat.nn.RecurrentNetwork.create(winner, config)
+    #print('\nOutput:')
+    #winner_net = neat.nn.RecurrentNetwork.create(winner, config)
 ##    for i, o in zip(inputs, outputs):
 ##        output = winner_net.activate(i)
 ##        #output = np.round(np.array(output))
 ##        print("input {!r}, expected output {!r}, got {!r}".format(i, o, output))
 
     # Visualize the winning network
-    visualize.draw_net(config, winner, True, filename='winner_net')
-    visualize.plot_stats(stats, ylog=False, view=True, filename='avg_fitness.svg')
-    visualize.plot_species(stats, view=True, filename='species.svg')
+    #visualize.draw_net(config, winner, True, filename='winner_net')
+    #visualize.plot_stats(stats, ylog=False, view=True, filename='avg_fitness.svg')
+    #visualize.plot_species(stats, view=True, filename='species.svg')
 
 
     

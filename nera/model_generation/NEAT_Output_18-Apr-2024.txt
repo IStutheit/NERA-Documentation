@@ -1,0 +1,161 @@
+18-Apr-2024-16:41
+NEAT ran for: 43.47510647773743 seconds
+
+ ****** Running generation 0 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    0    10      0.3    0.295     0
+Total extinctions: 0
+Generation time: 5.467 sec
+
+ ****** Running generation 1 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    1    10      0.3    0.295     1
+Total extinctions: 0
+Generation time: 3.220 sec (4.343 average)
+
+ ****** Running generation 2 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    2    10      0.3    0.295     2
+Total extinctions: 0
+Generation time: 3.412 sec (4.033 average)
+
+ ****** Running generation 3 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    3    10      0.3    0.295     3
+Total extinctions: 0
+Generation time: 3.581 sec (3.920 average)
+Saving checkpoint to neat-checkpoint-3
+
+ ****** Running generation 4 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    4    10      0.3    0.295     4
+Total extinctions: 0
+Generation time: 3.276 sec (3.791 average)
+
+ ****** Running generation 5 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    5    10      0.3    0.295     5
+Total extinctions: 0
+Generation time: 3.206 sec (3.694 average)
+
+ ****** Running generation 6 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    6    10      0.3    0.295     6
+Total extinctions: 0
+Generation time: 3.207 sec (3.624 average)
+
+ ****** Running generation 7 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    7    10      0.3    0.295     7
+Total extinctions: 0
+Generation time: 3.433 sec (3.600 average)
+Saving checkpoint to neat-checkpoint-7
+
+ ****** Running generation 8 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    8    10      0.3    0.295     8
+Total extinctions: 0
+Generation time: 3.793 sec (3.622 average)
+
+ ****** Running generation 9 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1    9    10      0.3    0.295     9
+Total extinctions: 0
+Generation time: 3.559 sec (3.615 average)
+
+ ****** Running generation 10 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1   10    10      0.3    0.295    10
+Total extinctions: 0
+Generation time: 3.569 sec (3.426 average)
+
+ ****** Running generation 11 ****** 
+
+Population's average fitness: 0.13124 stdev: 0.14819
+Best fitness: 0.31166 - size: (622, 22) - species 1 - id 2
+Average adjusted fitness: 0.295
+Mean genetic distance 3.724, standard deviation 0.878
+Population of 10 members in 1 species:
+   ID   age  size  fitness  adj fit  stag
+  ====  ===  ====  =======  =======  ====
+     1   11    10      0.3    0.295    11
+Total extinctions: 0
+Generation time: 3.609 sec (3.465 average)
+Saving checkpoint to neat-checkpoint-11
