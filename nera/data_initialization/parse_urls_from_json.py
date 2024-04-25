@@ -1,6 +1,8 @@
 import json
 import os
 
+#from nera.utils.output_helpers import HORIZONTAL_LINE
+
 
 # TODO - There are two additional URLS that are available for each Contractor link. Do we need to be using these? 
 # They contain the game options, and the checkpoint zip file. 
@@ -9,7 +11,7 @@ import os
 
 
 #------------------------------------------------------------
-def parse_urls_from_json(file_path):
+def parse_urls_from_json(file_path, limit=None):
     """
     Extracts the URLs from the given JSON file and returns a list of URLs.
 
@@ -18,10 +20,12 @@ def parse_urls_from_json(file_path):
 
     Args:
     - file_path (str): The path to the JSON file containing the URLs.
+    - limit (int, optional): The number of URLs to extract. If None, all URLs will be extracted.
     """
 
     #STATUS MESSAGE
-    print("\nExtracting URLs...")
+    print("\n--------------------------------------------")
+    print("Attempting to extract URLs...\n")
 
 
     # Open the JSON file and load its content
@@ -32,7 +36,6 @@ def parse_urls_from_json(file_path):
     base_dir = data['basedir']
     rel_paths = data['relpaths']
     
-
     full_urls = []
     
     for rel_path in rel_paths:
@@ -44,20 +47,27 @@ def parse_urls_from_json(file_path):
 
         full_urls.append(mp4_url)
         full_urls.append(jsonl_url)
-
     
     #Only use the first 5 datasets for testing purposes. TODO switch this back to using all datasets when done testing
-    full_urls = full_urls[:10]
+    #full_urls = full_urls[:10]
+    if limit is not None:
+        full_urls = full_urls[:limit]
+
     
     # Get the unique dataset names from the list of URLs.
     urlFilenames = [os.path.basename(url).split('.')[0] for url in full_urls]
     dataset_names = list(set(urlFilenames))
         
 
-    
     #STATUS MESSAGE
     print(f"Extracted {len(full_urls)} URLs for {len(set(dataset_names))} unique datasets from {file_path}")
-    
+
+    #avoid printing all the dataset names if there are too many (powershell apparently REALLY hates massive print statements)
+    if len(set(dataset_names)) < 100:
+        for name in dataset_names:
+            print(name)
+    print("--------------------------------------------\n")
+
 
     # Return the list of URLs
     return full_urls
@@ -70,10 +80,14 @@ def parse_urls_from_json(file_path):
 # Example usage
 #------------------------------------------------------------
 if __name__ == "__main__":
-    # Test the function with a sample JSON file
-    #only print up to the first 5 url pairs (10 total urls to avoid cluttering the output)
-    file_path = '../../data/Contractor_Index_Files/all_6xx_Jun_29.json' # BE SURE TO UPDATE THIS IF WE MOVE THIS SCRIPT
-    #file_path = '../../data/Contractor_Index_Files/all_9xx_Jun_29.json' # BE SURE TO UPDATE THIS IF WE MOVE THIS SCRIPT
-    urls = parse_urls_from_json(file_path)
+
+    proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    contractor_index_files = os.path.join(proj_root, 'data', 'Contractor_Index_Files')
+    #json_file = os.path.join(contractor_index_files, 'all_6xx_Jun_29.json')
+    #json_file = os.path.join(contractor_index_files, 'all_9xx_Jun_29.json')
+    json_file = os.path.join(contractor_index_files, '6xx_tree_chop.json')
+
+    urls = parse_urls_from_json(json_file, limit=10)
+    print("EXAMPLE RUN USING A LIMIT OF 10 URLS!")
     print(urls)
 #------------------------------------------------------------
