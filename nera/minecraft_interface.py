@@ -4,6 +4,7 @@ import neat
 import pickle
 import cv2
 import numpy as np
+import tensorflow as tf
 
 config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      neat.DefaultSpeciesSet, neat.DefaultStagnation,
@@ -15,7 +16,9 @@ with open("model_generation/winner.pkl", 'rb') as f:
     
 winner_net = neat.nn.RecurrentNetwork.create(winner, config)
 
-env = gym.make("MineRLBasaltBuildVillageHouse-v0")
+autoencoder = tf.keras.models.load_model('autoencoder.h5')
+
+env = gym.make("MineRLBasaltFindCave-v0")
 print(env.action_space)
 
 obs = env.reset()
@@ -45,12 +48,18 @@ while not done:
     gobs = cv2.cvtColor(obs['pov'], cv2.COLOR_BGR2GRAY)
 
     # Resize to 25x25
-    gobs = cv2.resize(gobs, (25, 25))
+    gobs = cv2.resize(gobs, (64, 64))
 
     # Flatten the image to a 625x1 array
-    gobs = gobs.flatten().reshape(625, 1)
+    #gobs = gobs.flatten().reshape(4096, 1)
 
     gobs = gobs/255
+
+    gobs = [gobs]
+
+    gobs = np.stack(gobs, axis=0)
+
+    gobs = autoencoder.predict(gobs, verbose=0)[0]
 
     output = winner_net.activate(gobs)
     output[2] = output[2]#*1.8

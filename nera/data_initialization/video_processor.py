@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 import pickle
+import tensorflow as tf
 
 class VideoProcessor:
     def __init__(self, frameSize):
@@ -17,26 +18,32 @@ class VideoProcessor:
                 break
             
             # Resize the frame
-            resized_frame = cv2.resize(frame, (25, 25))
+            resized_frame = cv2.resize(frame, (64, 64))
             
             # Convert to grayscale
             gray_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2GRAY)
             
             # Flatten the frame
-            flattened_frame = gray_frame.flatten()
+            #flattened_frame = gray_frame.flatten()
             
             # Append the flattened frame to the list
-            frames.append(flattened_frame.tolist())
+            frames.append(gray_frame.tolist())
         
         cap.release()
 
         frames.pop()
 
         for i in range(len(frames)):
-            for j in range(len(frames[i])):
-                frames[i][j] = frames[i][j]/255
-        
-        return frames
+            for r in range(len(frames[i])):
+                for c in range(len(frames[i][r])):
+                    frames[i][r][c] = frames[i][r][c]/255
+
+
+        frame_stack = np.stack(frames, axis=0)
+        autoencoder = tf.keras.models.load_model('../autoencoder.h5')
+        encoded_imgs = autoencoder.predict(frame_stack)
+        #print(encoded_imgs[0].shape)
+        return encoded_imgs
 
 
     def process_all_videos(self, videos_path):
