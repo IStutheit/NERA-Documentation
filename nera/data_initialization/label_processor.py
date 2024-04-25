@@ -1,3 +1,7 @@
+"""
+**Object that contains json reading and processing into an array of data.**
+"""
+
 from __future__ import annotations
 import os
 import json
