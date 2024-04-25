@@ -20,21 +20,21 @@ class VideoProcessor:
     def __init__(self, frameSize):
         self.frameSize = frameSize
 
-    """
-    ## Compresses a video from mp4 to an array.
-    
-    ---
-    The frame is resized into the frameSize parameter for compressing.
-    The video is converted into black and white.
-    The frame is flattened into an array of each pixel
-    
-    ---
-    
-    ### Arguments:
-    
-    > video_path (str): the filepath to the video file to be processed
-    """
     def process_video(self, video_path):
+        """
+        ## Compresses a video from mp4 to an array.
+        
+        ---
+        The frame is resized into the frameSize parameter for compressing.
+        The video is converted into black and white.
+        The frame is flattened into an array of each pixel
+        
+        ---
+        
+        ### Arguments:
+        
+        > video_path (str): the filepath to the video file to be processed
+        """
         frames = []
         cap = cv2.VideoCapture(video_path)
         
@@ -65,19 +65,20 @@ class VideoProcessor:
         
         return frames
 
-    """
-    ## Driving class to process multiple videos
     
-    ---
-    
-    Only grabs mp4 files from the contractor data directory and runs process_video on each video.
-    
-    ---
-    
-    ### Arguments:
-    > videos_path (str): The path to the directory of all videos.
-    """
     def process_all_videos(self, videos_path):
+        """
+        ## Driving class to process multiple videos
+        
+        ---
+        
+        Only grabs mp4 files from the contractor data directory and runs process_video on each video.
+        
+        ---
+        
+        ### Arguments:
+        > videos_path (str): The path to the directory of all videos.
+        """
         files = os.listdir(videos_path)
         videos_data = []
         prepped_input_data = videos_path+'/prepped_input_data.pkl'
