@@ -26,7 +26,7 @@ jobs:
       - run: pip install opencv-python
       - run: pip install requests
       - run: pip install gym
-      - run: pip install neat
+      - run: pip install neat-python
 
       #Create and upload files
       - run: pdoc ./nera -o ./docs
