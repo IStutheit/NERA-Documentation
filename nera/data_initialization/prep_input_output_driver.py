@@ -8,7 +8,7 @@ from label_processor import LabelProcessor
 def main():
 
     MINUTES_OF_FOOTAGE = 60
-    WIDTH_HEIGHT = 32
+    WIDTH_HEIGHT = 64
 
     proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')) #clear existing training data
     data_dir = os.path.join(proj_root, 'data')
