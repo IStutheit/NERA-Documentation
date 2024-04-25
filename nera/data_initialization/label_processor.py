@@ -11,15 +11,16 @@ class LabelProcessor:
     def __init__(self):
         pass
     
-    """
-    ## Converts a json file of actions into a structured array
     
-    ---
-    
-    ### Arguments:
-    > file_path (str): the filepath to the json file to be processed
-    """
     def process_labels(self, file_path):
+        """
+        ## Converts a json file of actions into a structured array
+        
+        ---
+        
+        ### Arguments:
+        > file_path (str): the filepath to the json file to be processed
+        """
         labels = []
         with open(file_path, 'r') as file:
             content = file.read()
@@ -116,19 +117,20 @@ class LabelProcessor:
                 labels.append(label)
 
         return labels
-    """
-    ## Driving function to process multiple videos
     
-    ---
-    
-    Only grabs jsonl files from the contractor data directory and runs process_labels on each file.
-    
-    ---
-    
-    ### Arguments:
-    > labels_path (str): The path to the directory of all jsonl files.
-    """
     def process_all_labels(self, labels_path):
+        """
+        ## Driving function to process multiple labels from a directory
+        
+        ---
+        
+        Only grabs jsonl files from the contractor data directory and runs process_labels on each file.
+        
+        ---
+        
+        ### Arguments:
+        > labels_path (str): The path to the directory of all jsonl files.
+        """
         files = os.listdir(labels_path)
         labels_data = []
 
