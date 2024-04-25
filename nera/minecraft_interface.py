@@ -1,3 +1,4 @@
+"""
 import gym
 import neat
 import pickle
@@ -172,3 +173,4 @@ while not done:
 ##    print()
     obs, reward, done, _ = env.step(action)
     env.render()
+"""
