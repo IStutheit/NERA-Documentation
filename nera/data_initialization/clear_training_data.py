@@ -19,7 +19,7 @@ def clear_training_data(data_dir):
 
     ---
     
-    ### Arguments:
+    ### Args:
     > data_dir (str): The directory to search for the "NERA_TERAINING_DATA_INDEX_FILE.json" files.
     
     ### Returns:

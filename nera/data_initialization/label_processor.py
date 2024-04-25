@@ -18,10 +18,10 @@ class LabelProcessor:
         
         ---
         
-        ### Arguments:
-            > file_path (str): The path to the JSONL file.
+        ### Args:
+        > file_path (str): The path to the JSONL file.
         ### Returns:
-            > list: A list of JSON objects.
+        > list: A list of JSON objects.
         """
         encodings = ['utf-8', 'windows-1252']  # List common encodings to try
         for encoding in encodings:
@@ -49,10 +49,10 @@ class LabelProcessor:
         ---
 
         ###Args:
-            > data (dict): The JSON data to process.
-            > data_prev (dict): The previous JSON data entry for calculating changes.
+        > data (dict): The JSON data to process.
+        > data_prev (dict): The previous JSON data entry for calculating changes.
         ###Returns:
-            > list: A list of label values.
+        > list: A list of label values.
         """
         label = [random.uniform(0.1, 0.4) for _ in range(22)]
         key_presses = data.get('keyboard', {}).get('keys', [])
@@ -77,10 +77,10 @@ class LabelProcessor:
         
         ---
 
-        ##Argumentss:
-            > change (float): The change in yaw or pitch.
+        ##Args:
+        > change (float): The change in yaw or pitch.
         ##Returns:
-            > float: The adjusted change.
+        > float: The adjusted change.
         """
         if abs(change) > 1:
             return change / abs(change)
@@ -97,14 +97,14 @@ class LabelProcessor:
         
         ---
 
-        ### Arguments:
-            > label (list): The label array to update.
-            > key_presses (list): A list of key presses.
-            > mouse_presses (list): A list of mouse button presses.
-            > yaw_change (float): The change in yaw.
-            > pitch_change (float): The change in pitch.
+        ### Args:
+        > label (list): The label array to update.
+        > key_presses (list): A list of key presses.
+        > mouse_presses (list): A list of mouse button presses.
+        > yaw_change (float): The change in yaw.
+        > pitch_change (float): The change in pitch.
         ### Returns:
-            - None
+        > None
         """
         button_map = {"0": 0, "1": 21}
         key_map = {
@@ -136,9 +136,9 @@ class LabelProcessor:
         ---
         
         ### Args:
-            > file_path (str): The path to the file containing the labels.
+        > file_path (str): The path to the file containing the labels.
         ### Returns:
-            > list: A list of labels.
+        > list: A list of labels.
         """
         json_objects = self.read_jsonl_file(file_path)
         labels = []
@@ -157,9 +157,9 @@ class LabelProcessor:
         ---
         
         ### Args:
-            > labels_path (str): The path to the directory containing the label files.
+        > labels_path (str): The path to the directory containing the label files.
         ### Returns:
-            > None
+        > None
         """
         files = os.listdir(labels_path)
         labels_data = []

@@ -15,7 +15,7 @@ def check_urls(urls, session, limit=None):
     
     ---
     
-    ### Arguments:
+    ### Args:
     > urls (list of str): The URLs to check.
     > session (requests.Session): The session used for making requests.
     > limit (int, optional): The maximum number of accessible URLs to find before stopping. If None, all URLs are checked.
@@ -52,7 +52,7 @@ def download_file(session, url, download_dir):
 
     ---
 
-    ### Arguments:
+    ### Args:
     
     >session (requests.Session): The session to use for downloading the file.
     
@@ -94,7 +94,7 @@ def download_files(urls, download_dir, limit=None, num_workers=None):
     
     ---
 
-    ###Arguments:
+    ###Args:
     
     >urls (list of str): The URLs of the files to download.
     

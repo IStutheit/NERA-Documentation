@@ -12,7 +12,9 @@ def main():
     """
     Calls download_data_files, video_processor, and label_processor
     Utilizes the constants:
+    
     >MINUTES_OF_FOOTAGE: The amount of footage to be downloaded (the length of each video file depends on which contractor dataset you are using. It is 1 minute for TreeChop)
+    
     >WIDTH_HEIGHT: The size of the video file that will be compressed down to. (default as 25x25 pixels)
     
     """
