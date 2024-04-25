@@ -99,9 +99,13 @@ class LabelProcessor:
 
         ### Args:
         > label (list): The label array to update.
+        
         > key_presses (list): A list of key presses.
+        
         > mouse_presses (list): A list of mouse button presses.
+        
         > yaw_change (float): The change in yaw.
+        
         > pitch_change (float): The change in pitch.
         ### Returns:
         > None

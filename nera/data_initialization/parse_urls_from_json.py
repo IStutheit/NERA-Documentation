@@ -13,14 +13,19 @@ import os
 #------------------------------------------------------------
 def parse_urls_from_json(file_path, limit=None):
     """
-    Extracts the URLs from the given JSON file and returns a list of URLs.
+    ##Extracts the URLs from the given JSON file and returns a list of URLs.
+
+    ---
 
     Each dataset has several urls, but the basename of the .mp4 from the index file is a unique identifier.
     This basename will be the same for all urls in the same dataset, so we can use this to identify unique datasets)
 
-    Args:
-    - file_path (str): The path to the JSON file containing the URLs.
-    - limit (int, optional): The number of URLs to extract. If None, all URLs will be extracted.
+    ---
+
+    ###Args:
+    > file_path (str): The path to the JSON file containing the URLs.
+    
+    > limit (int, optional): The number of URLs to extract. If None, all URLs will be extracted.
     """
 
     #STATUS MESSAGE
