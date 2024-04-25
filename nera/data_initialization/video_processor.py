@@ -1,12 +1,35 @@
+"""
+**Class that holds video proccessing.**
+"""
 import cv2
 import numpy as np
 import os
 import pickle
 
 class VideoProcessor:
+    """
+    ## Generates a VideoProcessor object.
+    
+    ---
+    
+    ### Arguments:
+    
+    > frameSize (int): the size of the video file with a 1:1 aspect ratio. 
+    
+    """
     def __init__(self, frameSize):
         self.frameSize = frameSize
 
+    """
+    ## Compresses a video from mp4 to an array.
+    The frame is resized into the frameSize parameter for compressing.
+    The video is converted into black and white.
+    The frame is flattened into an array of each pixel
+    
+    ### Arguments:
+    
+    > video_path (str): the filepath to the video file to be processed
+    """
     def process_video(self, video_path):
         frames = []
         cap = cv2.VideoCapture(video_path)
@@ -38,7 +61,14 @@ class VideoProcessor:
         
         return frames
 
-
+    """
+    ## Driving class to process multiple videos
+    Only grabs mp4 files from the contractor data directory and runs process_video on each video.
+    ---
+    
+    ### Arguments:
+    > videos_path (str): The path to the directory of all videos.
+    """
     def process_all_videos(self, videos_path):
         files = os.listdir(videos_path)
         videos_data = []
