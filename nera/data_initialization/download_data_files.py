@@ -89,6 +89,9 @@ def download_file(session, url, download_dir):
 def download_files(urls, download_dir, limit=None, num_workers=None):
     """
     ##Downloads each file from the given list of URLs to the specified directory using multiple workers.
+    
+    ---
+    
     Tracks downloaded files and writes an index of downloaded file paths to a JSON file.
     Summarizes the download status.
     
