@@ -1,140 +1,157 @@
-"""
-**LabelProcessor object that holds maintains label processing.**
-"""
-import numpy as np
+from __future__ import annotations
 import os
-import pickle
-import random
 import json
-
+import random
+import pickle
+#------------------------------------------------------------------------------
 class LabelProcessor:
+
+    #------------------------------------------------------------------------------
     def __init__(self):
         pass
+    #------------------------------------------------------------------------------
     
-    
-    def process_labels(self, file_path):
+    #------------------------------------------------------------------------------
+    def read_jsonl_file(self, file_path: str) -> list:
         """
-        ## Converts a json file of actions into a structured array
-        
-        ---
-        
-        ### Arguments:
-        > file_path (str): the filepath to the json file to be processed
+        Reads a JSONL file. Allows for multiple encodings to be tried.
+
+        Args:
+            - file_path (str): The path to the JSONL file.
+        Returns:
+            - list: A list of JSON objects.
         """
+        encodings = ['utf-8', 'windows-1252']  # List common encodings to try
+        for encoding in encodings:
+            try:
+                with open(file_path, 'r', encoding=encoding) as file:
+                    content = file.read().replace('\r\n', '\n')
+                    return [json.loads(line) for line in content.splitlines() if line.strip()]
+            except UnicodeDecodeError:
+                # print the failure and inform the user which encoding will be tried next
+                print(f"Encoding {encoding} failed for {file_path}; trying next encoding: {encodings[encodings.index(encoding) + 1]}")
+                continue
+            except Exception as e:
+                print(f"Failed to read or parse {file_path} with {encoding}: {e}")
+                return []
+        print(f"All encodings failed for {file_path}. Check if the file is corrupted.")
+        return []
+    #------------------------------------------------------------------------------
+
+
+    #------------------------------------------------------------------------------
+    def process_label(self, data: dict, data_prev: dict = None) -> list:
+        """
+        Processes a single JSON entry to extract label information.
+
+        Args:
+            - data (dict): The JSON data to process.
+            - data_prev (dict): The previous JSON data entry for calculating changes.
+        Returns:
+            - list: A list of label values.
+        """
+        label = [random.uniform(0.1, 0.4) for _ in range(22)]
+        key_presses = data.get('keyboard', {}).get('keys', [])
+        mouse_presses = data.get('mouse', {}).get('buttons', [])
+
+        yaw_change = pitch_change = 0
+        if data_prev:
+            yaw_change = data.get('yaw', 0) - data_prev.get('yaw', 0)
+            pitch_change = data.get('pitch', 0) - data_prev.get('pitch', 0)
+            yaw_change = self.adjust_change(yaw_change)
+            pitch_change = self.adjust_change(pitch_change)
+
+        self.update_labels(label, key_presses, mouse_presses, yaw_change, pitch_change)
+        return label
+    #------------------------------------------------------------------------------
+
+
+    #------------------------------------------------------------------------------
+    def adjust_change(self, change: float) -> float:
+        """
+        Adjusts yaw or pitch changes based on thresholds.
+
+        Args:
+            - change (float): The change in yaw or pitch.
+        Returns:
+            - float: The adjusted change.
+        """
+        if abs(change) > 1:
+            return change / abs(change)
+        elif abs(change) < 0.01:
+            return random.uniform(0.05, 0.4) - random.uniform(0.05, 0.4)
+        return change
+    #------------------------------------------------------------------------------
+
+
+    #------------------------------------------------------------------------------
+    def update_labels(self, label: list, key_presses: list, mouse_presses: list, yaw_change: float, pitch_change: float) -> None:
+        """
+        Updates the label array based on input data.
+
+        Args:
+            - label (list): The label array to update.
+            - key_presses (list): A list of key presses.
+            - mouse_presses (list): A list of mouse button presses.
+            - yaw_change (float): The change in yaw.
+            - pitch_change (float): The change in pitch.
+        Returns:
+            - None
+        """
+        button_map = {"0": 0, "1": 21}
+        key_map = {
+            "key.keyboard.s": 1, "key.keyboard.q": 4, "key.keyboard.w": 5, 
+            "key.keyboard.1": 6, "key.keyboard.2": 7, "key.keyboard.3": 8,
+            "key.keyboard.4": 9, "key.keyboard.5": 10, "key.keyboard.6": 11,
+            "key.keyboard.7": 12, "key.keyboard.8": 13, "key.keyboard.9": 14,
+            "key.keyboard.e": 15, "key.keyboard.space": 16, "key.keyboard.a": 17,
+            "key.keyboard.d": 18, "key.keyboard.left.shift": 19, "key.keyboard.right.shift": 19,
+            "key.keyboard.left.control": 20, "key.keyboard.right.control": 20
+        }
+
+        for button, idx in button_map.items():
+            if int(button) in mouse_presses:
+                label[idx] = 1
+        for key, idx in key_map.items():
+            if key in key_presses:
+                label[idx] = 1
+        label[2] = yaw_change
+        label[3] = pitch_change
+    #------------------------------------------------------------------------------
+
+
+    #------------------------------------------------------------------------------
+    def process_labels(self, file_path: str) -> list:
+        """
+        Processes all labels in a given file.
+        
+        Args:
+            - file_path (str): The path to the file containing the labels.
+        Returns:
+            - list: A list of labels.
+        """
+        json_objects = self.read_jsonl_file(file_path)
         labels = []
-        with open(file_path, 'r') as file:
-            content = file.read()
-            
-        json_objects = content.split('\n')
-
-        for json_str in json_objects:
-            if json_str.strip():  # Skip empty lines
-                label = [random.uniform(.1, 0.4) for i in range(22)] #Initializes labels to random values less than .5.
-                data = json.loads(json_str)
-                key_presses = data.get('keyboard', None).get('keys', None)
-                mouse_presses = data.get('mouse', None).get('buttons',None)
-                if json_objects.index(json_str) != 0:
-                    data_prev = json.loads(json_objects[json_objects.index(json_str) - 1])
-                    yaw_change = data.get('yaw', None) - data_prev.get('yaw', None)
-                    pitch_change = data.get('pitch', None) - data_prev.get('pitch', None)
-
-                    if abs(yaw_change) > 1:
-                        yaw_change = yaw_change/abs(yaw_change)
-                    elif abs(yaw_change) < .01:
-                        yaw_change = random.uniform(.05, 0.4) - random.uniform(.05, 0.4)
-
-                    if abs(pitch_change) > 1:
-                        pitch_change = pitch_change/abs(pitch_change)
-                    elif abs(pitch_change) < .01:
-                        pitch_change = random.uniform(.05, 0.4) - random.uniform(.05, 0.4)
-                else:
-                    yaw_change = random.uniform(.05, 0.4) - random.uniform(.05, 0.4)
-                    pitch_change = random.uniform(.05, 0.4) - random.uniform(.05, 0.4)
-
-                if 0 in mouse_presses:
-                    label[0] = 1
-                    
-                if "key.keyboard.s" in key_presses:
-                    label[1] = 1
-                    
-                label[2] = yaw_change
-                label[3] = pitch_change
-
-                if "key.keyboard.q" in key_presses:
-                    label[4] = 1
-
-                if "key.keyboard.w" in key_presses:
-                    label[5] = 1
-
-                if "key.keyboard.1" in key_presses:
-                    label[6] = 1
-                    
-                if "key.keyboard.2" in key_presses:
-                    label[7] = 1
-                    
-                if "key.keyboard.3" in key_presses:
-                    label[8] = 1
-                    
-                if "key.keyboard.4" in key_presses:
-                    label[9] = 1
-                    
-                if "key.keyboard.5" in key_presses:
-                    label[10] = 1
-                    
-                if "key.keyboard.6" in key_presses:
-                    label[11] = 1
-
-                if "key.keyboard.7" in key_presses:
-                    label[12] = 1
-                    
-                if "key.keyboard.8" in key_presses:
-                    label[13] = 1
-                    
-                if "key.keyboard.9" in key_presses:
-                    label[14] = 1
-
-                if "key.keyboard.e" in key_presses:
-                    label[15] = 1
-
-                if "key.keyboard.space" in key_presses:
-                    label[16] = 1
-
-                if "key.keyboard.a" in key_presses:
-                    label[17] = 1
-
-                if "key.keyboard.d" in key_presses:
-                    label[18] = 1
-
-                if "key.keyboard.left.shift" in key_presses or "key.keyboard.right.shift" in key_presses:
-                    label[19] = 1
-
-                if "key.keyboard.left.control" in key_presses or "key.keyboard.right.control" in key_presses:
-                    label[20] = 1
-
-                if 1 in mouse_presses:
-                    label[21] = 1
-
-                labels.append(label)
-
+        for i, data in enumerate(json_objects):
+            prev_data = json_objects[i - 1] if i > 0 else None
+            label = self.process_label(data, prev_data)
+            labels.append(label)
         return labels
-    
-    def process_all_labels(self, labels_path):
+    #------------------------------------------------------------------------------
+
+    #------------------------------------------------------------------------------
+    def process_all_labels(self, labels_path: str) -> None:
         """
-        ## Driving function to process multiple labels from a directory
+        Processes all label files in a directory.
         
-        ---
-        
-        Only grabs jsonl files from the contractor data directory and runs process_labels on each file.
-        
-        ---
-        
-        ### Arguments:
-        > labels_path (str): The path to the directory of all jsonl files.
+        Args:
+            - labels_path (str): The path to the directory containing the label files.
+        Returns:
+            - None
         """
         files = os.listdir(labels_path)
         labels_data = []
-
-        prepped_output_data = labels_path+'/prepped_output_data.pkl'
+        prepped_output_data = os.path.join(labels_path, 'prepped_output_data.pkl')
 
         for file in files:
             if file.endswith('.jsonl'):
@@ -144,3 +161,6 @@ class LabelProcessor:
 
         with open(prepped_output_data, 'wb') as file:
             pickle.dump(labels_data, file)
+    #------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
