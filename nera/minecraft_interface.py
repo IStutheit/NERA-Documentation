@@ -1,5 +1,4 @@
 import gym
-import minerl
 import neat
 import pickle
 import cv2
