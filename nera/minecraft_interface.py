@@ -6,10 +6,10 @@ import numpy as np
 
 config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                     "./model_generation/config")
+                     "../nera/minecraft_interface.py")
 
 # Load the winner
-with open("./model_generation/winner.pkl", 'rb') as f:
+with open("../nera/model_generation/winner.pkl", 'rb') as f:
     winner = pickle.load(f)
     
 winner_net = neat.nn.RecurrentNetwork.create(winner, config)
