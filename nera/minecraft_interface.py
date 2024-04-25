@@ -135,7 +135,7 @@ while not done:
     
         
     if (output[15] >= .5):
-        action["inventory"] = 0
+        action["inventory"] = 1
     else:
         action["inventory"] = 0
         
