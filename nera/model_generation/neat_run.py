@@ -61,9 +61,7 @@ def eval_genome(genome, config):
             #else:
             #score += 1 - ((.913 * BinaryCrossEntropy(output_data[i][j][0:2] + output_data[i][j][4:], output[0:2] + output[4:]) + .087*mean_squared_error(output_data[i][j][2:4], output[2:4])) / 2)
             score += 1 - mean_squared_error(output_data[i][j], output, dead_outputs)
-            if j % 10 == 0:
-                net.reset()
-        #net.reset()
+        net.reset()
     return score/(len(input_data)*1200)
 
 def count_zero_incoming_weights(genome, config):

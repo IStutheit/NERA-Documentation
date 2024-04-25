@@ -40,7 +40,7 @@ class VideoProcessor:
 
 
         frame_stack = np.stack(frames, axis=0)
-        autoencoder = tf.keras.models.load_model('autoencoder.h5')
+        autoencoder = tf.keras.models.load_model('../autoencoder.h5')
         encoded_imgs = autoencoder.predict(frame_stack)
         #print(encoded_imgs[0].shape)
         return encoded_imgs
