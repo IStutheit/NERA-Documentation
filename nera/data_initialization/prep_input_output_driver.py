@@ -1,3 +1,6 @@
+"""
+**The driver class that combines all data downloading and processing classes**
+"""
 from download_data_files import download_files
 from clear_training_data import clear_training_data
 from parse_urls_from_json import parse_urls_from_json
@@ -6,6 +9,13 @@ from video_processor import VideoProcessor
 from label_processor import LabelProcessor
 
 def main():
+    """
+    Calls download_data_files, video_processor, and label_processor
+    Utilizes the constants:
+    >MINUTES_OF_FOOTAGE: The amount of footage to be downloaded (the length of each video file depends on which contractor dataset you are using. It is 1 minute for TreeChop)
+    >WIDTH_HEIGHT: The size of the video file that will be compressed down to. (default as 25x25 pixels)
+    
+    """
 
     MINUTES_OF_FOOTAGE = 60
     WIDTH_HEIGHT = 25
