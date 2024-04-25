@@ -22,9 +22,13 @@ class VideoProcessor:
 
     """
     ## Compresses a video from mp4 to an array.
+    
+    ---
     The frame is resized into the frameSize parameter for compressing.
     The video is converted into black and white.
     The frame is flattened into an array of each pixel
+    
+    ---
     
     ### Arguments:
     
@@ -63,7 +67,11 @@ class VideoProcessor:
 
     """
     ## Driving class to process multiple videos
+    
+    ---
+    
     Only grabs mp4 files from the contractor data directory and runs process_video on each video.
+    
     ---
     
     ### Arguments:
