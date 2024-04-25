@@ -12,7 +12,7 @@ class VideoProcessor:
     
     ---
     
-    ### Arguments:
+    ### Args:
     
     > frameSize (int): the size of the video file with a 1:1 aspect ratio. 
     
@@ -31,7 +31,7 @@ class VideoProcessor:
         
         ---
         
-        ### Arguments:
+        ### Args:
         
         > video_path (str): the filepath to the video file to be processed
         """
@@ -76,7 +76,7 @@ class VideoProcessor:
         
         ---
         
-        ### Arguments:
+        ### Args:
         > videos_path (str): The path to the directory of all videos.
         """
         files = os.listdir(videos_path)

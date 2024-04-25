@@ -27,7 +27,7 @@ def process_single_video(video_path, output_dir=None):
     
     ---
     
-    ### Arguments:
+    ### Args:
     
     > video_path (str): The path to the video file to be processed.   
 
@@ -82,7 +82,7 @@ def process_video_frames(video_paths, output_dir=None, num_workers=None):
 
     ---
 
-    ### Arguments:
+    ### Args:
     
     >video_paths (list of str): The paths to the video files to be processed.
     
