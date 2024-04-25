@@ -11,13 +11,17 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 #------------------------------------------------------------
 def check_urls(urls, session, limit=None):
     """
-    Checks the availability of each URL in a list using a HEAD request, stopping when the limit of accessible URLs is reached.
-    Args:
-    - urls (list of str): The URLs to check.
-    - session (requests.Session): The session used for making requests.
-    - limit (int, optional): The maximum number of accessible URLs to find before stopping. If None, all URLs are checked.
-    Returns:
-    - dict: A dictionary with lists of 'accessible' and 'inaccessible' URLs.
+    ##Checks the availability of each URL in a list using a HEAD request, stopping when the limit of accessible URLs is reached.
+    
+    ---
+    
+    ### Arguments:
+    > urls (list of str): The URLs to check.
+    > session (requests.Session): The session used for making requests.
+    > limit (int, optional): The maximum number of accessible URLs to find before stopping. If None, all URLs are checked.
+    
+    ### Returns:
+    > dict: A dictionary with lists of 'accessible' and 'inaccessible' URLs.
     """
     results = {"accessible": [], "inaccessible": []}
     for url in urls:
@@ -40,13 +44,15 @@ def download_file(session, url, download_dir):
     """
     ## Helper function to download a single file.
     
+    ---
+    
     If the file already exists in the download directory, it will not be downloaded again.
     If the file is successfully downloaded, a success message is returned along with the file path.
     If the download fails, a failure message is returned along with None.
 
     ---
 
-    ###Arguments:
+    ### Arguments:
     
     >session (requests.Session): The session to use for downloading the file.
     
