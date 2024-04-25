@@ -1,7 +1,7 @@
 import os
 import json
 
-from nera.utils.output_helpers import HORIZONTAL_LINE
+#from nera.utils.output_helpers import HORIZONTAL_LINE
 
 
 def clear_training_data(data_dir):
@@ -41,7 +41,7 @@ def clear_training_data(data_dir):
                 os.remove(os.path.join(root, file))
 
     #STATUS MESSAGE
-    print("\n" + HORIZONTAL_LINE)
+    print("\n--------------------------------------------")
     print(f"Deleted {len(deleted_files)} files from {data_dir}")
     if errors:
         print(f"Errors:")
@@ -49,7 +49,7 @@ def clear_training_data(data_dir):
             print(error)
     for file in deleted_files:
         print(file)
-    print(HORIZONTAL_LINE + "\n")
+    print("--------------------------------------------\n")
 
 
 
