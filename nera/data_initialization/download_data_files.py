@@ -105,6 +105,9 @@ def download_files(urls, download_dir, limit=None, num_workers=None):
     
     >num_workers (int, optional): The number of worker threads to use for downloading files. If None, the number of workers is determined by the system's CPU count.
     
+    ### Returns:
+    > None
+    
     """
     if not os.path.exists(download_dir):
         os.makedirs(download_dir)

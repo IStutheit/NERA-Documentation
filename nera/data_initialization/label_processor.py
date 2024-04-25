@@ -20,6 +20,7 @@ class LabelProcessor:
         
         ### Args:
         > file_path (str): The path to the JSONL file.
+        
         ### Returns:
         > list: A list of JSON objects.
         """
@@ -51,6 +52,7 @@ class LabelProcessor:
         ###Args:
         > data (dict): The JSON data to process.
         > data_prev (dict): The previous JSON data entry for calculating changes.
+        
         ###Returns:
         > list: A list of label values.
         """
@@ -107,6 +109,7 @@ class LabelProcessor:
         > yaw_change (float): The change in yaw.
         
         > pitch_change (float): The change in pitch.
+        
         ### Returns:
         > None
         """
@@ -141,6 +144,7 @@ class LabelProcessor:
         
         ### Args:
         > file_path (str): The path to the file containing the labels.
+        
         ### Returns:
         > list: A list of labels.
         """
@@ -162,6 +166,7 @@ class LabelProcessor:
         
         ### Args:
         > labels_path (str): The path to the directory containing the label files.
+        
         ### Returns:
         > None
         """
