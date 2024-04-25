@@ -1,12 +1,12 @@
 """
 **The driver class that combines all data downloading and processing classes**
 """
-from download_data_files import download_files
-from clear_training_data import clear_training_data
-from parse_urls_from_json import parse_urls_from_json
+from .download_data_files import download_files
+from .clear_training_data import clear_training_data
+from .parse_urls_from_json import parse_urls_from_json
 import os
-from video_processor import VideoProcessor
-from label_processor import LabelProcessor
+from .video_processor import VideoProcessor
+from .label_processor import LabelProcessor
 
 def main():
     """
