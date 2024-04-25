@@ -11,6 +11,9 @@ import json
 def clear_training_data(data_dir):
     """
     ##Recursively search through the directory to delete all training data files.
+    
+    ---
+    
     We use this to avoid using wildcards or other methods that could potentially delete files we don't want to delete.
     In every directory, and subdirectory, check for a "NERA_TERAINING_DATA_INDEX_FILE.json" file.
 
