@@ -14,12 +14,14 @@ class LabelProcessor:
     #------------------------------------------------------------------------------
     def read_jsonl_file(self, file_path: str) -> list:
         """
-        Reads a JSONL file. Allows for multiple encodings to be tried.
-
-        Args:
-            - file_path (str): The path to the JSONL file.
-        Returns:
-            - list: A list of JSON objects.
+        ## Reads a JSONL file. Allows for multiple encodings to be tried.
+        
+        ---
+        
+        ### Arguments:
+            > file_path (str): The path to the JSONL file.
+        ### Returns:
+            > list: A list of JSON objects.
         """
         encodings = ['utf-8', 'windows-1252']  # List common encodings to try
         for encoding in encodings:
@@ -42,13 +44,15 @@ class LabelProcessor:
     #------------------------------------------------------------------------------
     def process_label(self, data: dict, data_prev: dict = None) -> list:
         """
-        Processes a single JSON entry to extract label information.
+        ##Processes a single JSON entry to extract label information.
 
-        Args:
-            - data (dict): The JSON data to process.
-            - data_prev (dict): The previous JSON data entry for calculating changes.
-        Returns:
-            - list: A list of label values.
+        ---
+
+        ###Args:
+            > data (dict): The JSON data to process.
+            > data_prev (dict): The previous JSON data entry for calculating changes.
+        ###Returns:
+            > list: A list of label values.
         """
         label = [random.uniform(0.1, 0.4) for _ in range(22)]
         key_presses = data.get('keyboard', {}).get('keys', [])
@@ -69,12 +73,14 @@ class LabelProcessor:
     #------------------------------------------------------------------------------
     def adjust_change(self, change: float) -> float:
         """
-        Adjusts yaw or pitch changes based on thresholds.
+        ##Adjusts yaw or pitch changes based on thresholds.
+        
+        ---
 
-        Args:
-            - change (float): The change in yaw or pitch.
-        Returns:
-            - float: The adjusted change.
+        ##Argumentss:
+            > change (float): The change in yaw or pitch.
+        ##Returns:
+            > float: The adjusted change.
         """
         if abs(change) > 1:
             return change / abs(change)
@@ -87,15 +93,17 @@ class LabelProcessor:
     #------------------------------------------------------------------------------
     def update_labels(self, label: list, key_presses: list, mouse_presses: list, yaw_change: float, pitch_change: float) -> None:
         """
-        Updates the label array based on input data.
+        ##Updates the label array based on input data.
+        
+        ---
 
-        Args:
-            - label (list): The label array to update.
-            - key_presses (list): A list of key presses.
-            - mouse_presses (list): A list of mouse button presses.
-            - yaw_change (float): The change in yaw.
-            - pitch_change (float): The change in pitch.
-        Returns:
+        ### Arguments:
+            > label (list): The label array to update.
+            > key_presses (list): A list of key presses.
+            > mouse_presses (list): A list of mouse button presses.
+            > yaw_change (float): The change in yaw.
+            > pitch_change (float): The change in pitch.
+        ### Returns:
             - None
         """
         button_map = {"0": 0, "1": 21}
@@ -123,12 +131,14 @@ class LabelProcessor:
     #------------------------------------------------------------------------------
     def process_labels(self, file_path: str) -> list:
         """
-        Processes all labels in a given file.
+        ## Processes all labels in a given file.
         
-        Args:
-            - file_path (str): The path to the file containing the labels.
-        Returns:
-            - list: A list of labels.
+        ---
+        
+        ### Args:
+            > file_path (str): The path to the file containing the labels.
+        ### Returns:
+            > list: A list of labels.
         """
         json_objects = self.read_jsonl_file(file_path)
         labels = []
@@ -142,12 +152,14 @@ class LabelProcessor:
     #------------------------------------------------------------------------------
     def process_all_labels(self, labels_path: str) -> None:
         """
-        Processes all label files in a directory.
+        ##Processes all label files in a directory.
         
-        Args:
-            - labels_path (str): The path to the directory containing the label files.
-        Returns:
-            - None
+        ---
+        
+        ### Args:
+            > labels_path (str): The path to the directory containing the label files.
+        ### Returns:
+            > None
         """
         files = os.listdir(labels_path)
         labels_data = []
