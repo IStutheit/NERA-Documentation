@@ -10,6 +10,14 @@ import time
 import sys
 import io
 
+#CONSTANT Declarations ---
+
+#Define the amount of generations to run
+GENERATIONS = 100
+    
+#Determine if you want to output at each generation or at the end of program
+PRINT_AT_END = False
+
 #with open("model.pkl", 'rb') as file:
     #autoencoder = pickle.load(file)
 
@@ -19,6 +27,7 @@ with open("../../data/tree_chop_data/prepped_input_data.pkl", 'rb') as file:
 with open("../../data/tree_chop_data/prepped_output_data.pkl", 'rb') as file:
     output_data = pickle.load(file)
 
+# Constant declaration concluded
     
 def mean_squared_error(y_true, y_pred, dead_outputs):
     """
@@ -92,12 +101,6 @@ def run(config_file):
 
     # Create the population, which is the top-level object for a NEAT run.
     p = neat.Population(config)
-    
-    #Define the amount of generations to run
-    GENERATIONS = 100
-    
-    #Determine if you want to output at each generation or at the end of program
-    PRINT_AT_END = False
 
 
     # Add a stdout reporter to show progress in the terminal.
