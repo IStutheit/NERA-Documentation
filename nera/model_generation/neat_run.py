@@ -5,6 +5,10 @@ import math
 import numpy as np
 import multiprocessing
 import pickle
+import datetime
+import time
+import sys
+import io
 
 #with open("model.pkl", 'rb') as file:
     #autoencoder = pickle.load(file)
@@ -88,39 +92,89 @@ def run(config_file):
 
     # Create the population, which is the top-level object for a NEAT run.
     p = neat.Population(config)
-    #p = neat.Checkpointer.restore_checkpoint(checkpoint_path)
+    
+    #Define the amount of generations to run
+    GENERATIONS = 100
+    
+    #Determine if you want to output at each generation or at the end of program
+    PRINT_AT_END = False
 
-    #config = p.config
 
     # Add a stdout reporter to show progress in the terminal.
     p.add_reporter(neat.StdOutReporter(True))
-    stats = neat.StatisticsReporter()
-    p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(5))
+    p.add_reporter(neat.Checkpointer(generation_interval= int(GENERATIONS/3)))
+    
+    print("-- NEAT Starting --")
+    
+    if PRINT_AT_END:
+        #Redirect the stdout to an IO object
+        stream = io.StringIO()
+        old_stdout = sys.stdout
+        sys.stdout = stream
+   
+    #Keep track of how long the process took
+    start = time.time()
+
+    if 'SLURM_NTASKS' in os.environ:
+        num_cores = num_cores = int(os.getenv('SLURM_NTASKS'))  # Get the number of cores from Slurm environment variable
+    else:
+        num_cores = multiprocessing.cpu_count()  # Get the number of CPU cores available on the machine
+    
+    print(f"Number of cores used: {num_cores}")
 
     # Run for up to 500 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 100)
+    winner = p.run(pe.evaluate, GENERATIONS)
+    
+    #Finish the timer for how long Neat.run() took
+    end = time.time()
+    
+    if PRINT_AT_END:
+        #Restore stdout to original
+        sys.stdout = old_stdout
 
     # Save the winner
     with open('winner.pkl', 'wb') as f:
         pickle.dump(winner, f)
+        
 
+
+    #Display the latest generation to console
+    print("\nLatest Generation:")
+    data = stream.getvalue().splitlines()[-12:]
+    for i in data:
+        print(i)
+
+
+    date = datetime.datetime.now()
+    if PRINT_AT_END:
+        outputFile = local_dir + "/" +"NEAT_Output_" + date.strftime("%d-%b-%Y") + ".txt"
+        with open(outputFile, "w+") as f:
+
+            f.write(date.strftime("%d-%b-%Y-%H:%M%Z"))
+            f.write("\nNEAT ran for: " + str(end-start) + " seconds\n")
+
+            f.write(stream.getvalue())
+
+    else: 
+        print(date.strftime("%d-%b-%Y-%H:%M%Z"))
+        print("\nNEAT ran for: " + str(end-start) + " seconds\n")
+        
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(winner))
 
     # Show output of the most fit genome against training data.
-    print('\nOutput:')
-    winner_net = neat.nn.RecurrentNetwork.create(winner, config)
+    #print('\nOutput:')
+    #winner_net = neat.nn.RecurrentNetwork.create(winner, config)
 ##    for i, o in zip(inputs, outputs):
 ##        output = winner_net.activate(i)
 ##        #output = np.round(np.array(output))
 ##        print("input {!r}, expected output {!r}, got {!r}".format(i, o, output))
 
     # Visualize the winning network
-    visualize.draw_net(config, winner, True, filename='winner_net')
-    visualize.plot_stats(stats, ylog=False, view=True, filename='avg_fitness.svg')
-    visualize.plot_species(stats, view=True, filename='species.svg')
+    #visualize.draw_net(config, winner, True, filename='winner_net')
+    #visualize.plot_stats(stats, ylog=False, view=True, filename='avg_fitness.svg')
+    #visualize.plot_species(stats, view=True, filename='species.svg')
 
 
     
