@@ -1,4 +1,4 @@
-import gym
+""" import gym
 import minerl
 import neat
 import pickle
@@ -8,15 +8,15 @@ import tensorflow as tf
 
 config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                     "model_generation/config")
+                     "./nera/model_generation/config")
 
 # Load the winner
-with open("model_generation/winner.pkl", 'rb') as f:
+with open("./nera/model_generation/winner.pkl", 'rb') as f:
     winner = pickle.load(f)
     
 winner_net = neat.nn.RecurrentNetwork.create(winner, config)
 
-autoencoder = tf.keras.models.load_model('autoencoder.h5')
+autoencoder = tf.keras.models.load_model("./nera/autoencoder.h5")
 
 env = gym.make("MineRLBasaltFindCave-v0")
 print(env.action_space)
@@ -182,3 +182,4 @@ while not done:
 ##    print()
     obs, reward, done, _ = env.step(action)
     env.render()
+ """

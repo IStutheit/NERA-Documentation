@@ -27,6 +27,7 @@ jobs:
       - run: pip install requests
       - run: pip install gym
       - run: pip install neat-python
+      - run: pip install tensorflow
 
       #Create and upload files
       - run: pdoc ./nera -o ./docs
