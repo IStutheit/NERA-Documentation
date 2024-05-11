@@ -30,7 +30,7 @@ jobs:
       - run: pip install tensorflow
 
       #Create and upload files
-      - run: pdoc ../../../CSCI4970-MC-GamePlayingBot/ -o ./docs
+      - run: pdoc ../../../NERA-Documentation/ -o ./docs
 
       - uses: actions/upload-pages-artifact@v3
         with:
