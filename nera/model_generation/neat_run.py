@@ -1,3 +1,7 @@
+"""
+**NEAT Driver Class**
+"""
+
 import neat
 import os
 import visualize
@@ -12,29 +16,41 @@ import io
 
 #CONSTANT Declarations ---
 
-#Define the amount of generations to run
+
 GENERATIONS = 100
-    
-#Determine if you want to output at each generation or at the end of program
+"""Define the amount of generations to run"""
+
 PRINT_AT_END = False
+"""Determine if you want to output at each generation or at the end of program"""
 
 #with open("model.pkl", 'rb') as file:
     #autoencoder = pickle.load(file)
 
-with open("../../data/tree_chop_data/prepped_input_data.pkl", 'rb') as file:
-    input_data = pickle.load(file)
+#with open("../../data/tree_chop_data/prepped_input_data.pkl", 'rb') as file:
+#    input_data = pickle.load(file)
 
-with open("../../data/tree_chop_data/prepped_output_data.pkl", 'rb') as file:
-    output_data = pickle.load(file)
+#with open("../../data/tree_chop_data/prepped_output_data.pkl", 'rb') as file:
+#    output_data = pickle.load(file)
 
 # Constant declaration concluded
     
 def mean_squared_error(y_true, y_pred, dead_outputs):
     """
-    Computes the mean squared error between true values and predicted values.
-    :param y_true: Array of true values.
-    :param y_pred: Array of predicted values.
-    :return: Mean squared error.
+    ## Computes the mean squared error between true values and predicted values.
+    
+    ---
+    
+    ### Args:
+    
+    > y_true (list): Array of true values.
+    
+    > y_pred (list): Array of predicted values.
+    
+    > dead_outputs (int): Num of outputs to be ignored
+    
+    ### Returns:
+    
+    > int: Mean squared error.
     """
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
@@ -44,6 +60,21 @@ def mean_squared_error(y_true, y_pred, dead_outputs):
     return mse
 
 def BinaryCrossEntropy(y_true, y_pred):
+    """
+    ## Computes the Binary Cross Entropy between true values and predicted values.
+    
+    ---
+    
+    ### Args:
+    
+    > y_true (list): Array of true values.
+    
+    > y_pred (list): Array of predicted values.
+    
+    ### Returns:
+    
+    > int: Mean Binary Cross Entropy value
+    """
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
     y_pred = np.clip(y_pred, 1e-7, 1 - 1e-7)
@@ -52,6 +83,21 @@ def BinaryCrossEntropy(y_true, y_pred):
     return -np.mean(term_0+term_1, axis=0)
 
 def error(y_true, y_pred):
+    """
+    ## Computes the total error between true and predicted values
+    
+    ---
+    
+    ### Args:
+    
+    > y_true (list): Array of true values.
+    
+    > y_pred (list): Array of predicted values.
+    
+    ### Returns:
+    
+    > int: Mean squared error.
+    """
     error = 0
     for i in range(len(y_true)):
         if i == 1 or i == 2 or i == 3 or i == 5 or i == 17 or i == 18:
@@ -61,6 +107,25 @@ def error(y_true, y_pred):
     return error
 
 def eval_genome(genome, config):
+    """
+    ## Evaluates a given genome based on a fitness function.
+    
+    ---
+    
+    Current fitness function finds the mean squared error excluding genomes with zero weight
+    
+    ---
+    
+    ### Args:
+    
+    > genome (NEAT Genome): The NEAT genome object to be evaluated.
+    
+    > config (NEAT Config): The NEAT config object that contains the parameters in which the genome was run on.
+    
+    ### Returns:
+    
+    > int: The total fitness of all weights of the genome.
+    """
     x = 0
     score = 0
     net = neat.nn.RecurrentNetwork.create(genome, config)
@@ -78,6 +143,21 @@ def eval_genome(genome, config):
     return score/(len(input_data)*1200)
 
 def count_zero_incoming_weights(genome, config):
+    """
+    ## Counts the number of incoming edges that have a weight of zero.
+    
+    ---
+    
+    ### Args:
+    
+    > genome (NEAT Genome): The NEAT genome object to be evaluated.
+    
+    > config (NEAT Config): The NEAT config object that contains the parameters in which the genome was run on.
+    
+    ### Returns:
+    
+    > int: Num of edges that have no incoming weights
+    """
     # Create a dictionary to count incoming connections for each output neuron
     incoming_weights = {node_id: 0 for node_id in config.genome_config.output_keys}
 
@@ -92,6 +172,27 @@ def count_zero_incoming_weights(genome, config):
 
 
 def run(config_file):
+    
+    """
+    ## Runs Neat.
+    
+    ---
+    
+    While running NEAT, will also print the generation information, or save it to a new file.
+    
+    When run is completed it will also generate the winner.pkl file, which contains the resulting best trained neural network.
+    
+    ---
+    
+    ### Args:
+    
+    > config_file (String): The file path for the NEAT config file.
+    
+    ### Returns:
+    
+    > None (but does create new files)
+    """
+
     # Load configuration.
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
