@@ -4,7 +4,7 @@
 
 import neat
 import os
-import visualize
+#import visualize
 import math
 import numpy as np
 import multiprocessing
