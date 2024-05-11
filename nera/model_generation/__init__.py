@@ -1,5 +1,5 @@
 """
-# *The model generation directory holds the files related to running the NEAT algorithm*
+# The model generation directory holds the files related to running the NEAT algorithm
 
 ---
 
