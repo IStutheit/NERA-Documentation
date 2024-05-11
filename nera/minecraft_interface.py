@@ -1,4 +1,12 @@
-""" import gym
+"""
+# *The Minecraft Interface does not have a parseable autodoc as some of the code is in java and the minerl package is far too large to download.*
+
+## Below is the undocumented code for your view.
+
+
+```
+
+import gym
 import minerl
 import neat
 import pickle
@@ -182,4 +190,6 @@ while not done:
 ##    print()
     obs, reward, done, _ = env.step(action)
     env.render()
- """
+    
+```
+"""
